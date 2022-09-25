@@ -1,0 +1,11 @@
+{
+  "name": "tsconfig",
+  "version": "0.0.1",
+  "private": true,
+  "files": [
+    "base.json",
+    "nestjs.json",
+    "react-library.json",
+    "vite.json"
+  ]
+}
