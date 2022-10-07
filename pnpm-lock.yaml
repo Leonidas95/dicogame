@@ -15,19 +15,19 @@ importers:
       '@vitejs/plugin-react': ^2.1.0
       react: ^18.2.0
       react-dom: ^18.2.0
-      tsconfig: '*'
+      tsconfig: workspace:*
       typescript: ^4.8.4
-      ui: '*'
+      ui: workspace:*
       vite: ^3.1.4
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      ui: 0.2.4
+      ui: link:../../packages/ui
     devDependencies:
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
       '@vitejs/plugin-react': 2.1.0_vite@3.1.4
-      tsconfig: 7.0.0
+      tsconfig: link:../../packages/tsconfig
       typescript: 4.8.4
       vite: 3.1.4
 
@@ -61,7 +61,7 @@ importers:
       ts-jest: ^28.0.8
       ts-loader: ^9.4.1
       ts-node: ^10.9.1
-      tsconfig: workspace:0.0.1
+      tsconfig: workspace:*
       tsconfig-paths: ^4.1.0
       typescript: ^4.8.4
       winston: ^3.8.2
@@ -107,9 +107,9 @@ importers:
       '@vitejs/plugin-react': ^2.1.0
       react: ^18.2.0
       react-dom: ^18.2.0
-      tsconfig: workspace:0.0.1
+      tsconfig: workspace:*
       typescript: ^4.8.4
-      ui: workspace:0.0.1
+      ui: workspace:*
       vite: ^3.1.4
     dependencies:
       react: 18.2.0
@@ -131,7 +131,7 @@ importers:
       '@types/react': ^18.0.21
       '@types/react-dom': ^18.0.6
       react: ^18.2.0
-      tsconfig: workspace:0.0.1
+      tsconfig: workspace:*
       typescript: ^4.8.4
     devDependencies:
       '@types/react': 18.0.21
@@ -1400,14 +1400,6 @@ packages:
 
   /@types/stack-utils/2.0.1:
     resolution: {integrity: sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==}
-    dev: true
-
-  /@types/strip-bom/3.0.0:
-    resolution: {integrity: sha512-xevGOReSYGM7g/kUBZzPqCrR/KYAo+F0yiPc85WFTJa0MSLtyFTVTU6cJu/aV4mid7IffDIWqo69THF2o4JiEQ==}
-    dev: true
-
-  /@types/strip-json-comments/0.0.30:
-    resolution: {integrity: sha512-7NQmHra/JILCd1QqpSzl8+mJRc8ZHz3uDm8YV1Ks9IhK0epEiTw8aIErbvH9PI+6XbqhyIQy3462nEsn7UVzjQ==}
     dev: true
 
   /@types/superagent/4.1.15:
@@ -5272,10 +5264,6 @@ packages:
     resolution: {integrity: sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==}
     engines: {node: '>= 0.8'}
 
-  /std/0.1.40:
-    resolution: {integrity: sha512-wUf57hkDGCoVShrhPA8Q7lAg2Qosk+FaMlECmAsr1A4/rL2NRXFHQGBcgMUFKVkPEemJFW9gzjCQisRty14ohg==}
-    dev: false
-
   /streamsearch/1.1.0:
     resolution: {integrity: sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==}
     engines: {node: '>=10.0.0'}
@@ -5343,11 +5331,6 @@ packages:
   /strip-final-newline/2.0.0:
     resolution: {integrity: sha512-BrpvfNAE3dcvq7ll3xVumzjKjZQ5tI1sEUIKr3Uoks0XUl45St3FlatVqef9prk4jRDzhW6WZg+3bk93y6pLjA==}
     engines: {node: '>=6'}
-    dev: true
-
-  /strip-json-comments/2.0.1:
-    resolution: {integrity: sha512-4gB8na07fecVVkOI6Rs4e7T6NOTki5EmL7TUduTs6bu3EdnSycntVJ4re8kgZA+wx9IueI2Y11bfbgwtzuE0KQ==}
-    engines: {node: '>=0.10.0'}
     dev: true
 
   /strip-json-comments/3.1.1:
@@ -5652,15 +5635,6 @@ packages:
       strip-bom: 3.0.0
     dev: true
 
-  /tsconfig/7.0.0:
-    resolution: {integrity: sha512-vZXmzPrL+EmC4T/4rVlT2jNVMWCi/O4DIiSj3UHg1OE5kCKbk4mfrXc6dZksLgRM/TZlKnousKH9bbTazUWRRw==}
-    dependencies:
-      '@types/strip-bom': 3.0.0
-      '@types/strip-json-comments': 0.0.30
-      strip-bom: 3.0.0
-      strip-json-comments: 2.0.1
-    dev: true
-
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
     dev: true
@@ -5782,12 +5756,6 @@ packages:
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true
-
-  /ui/0.2.4:
-    resolution: {integrity: sha512-se2D+frb/i6JwFc7j72IEa0JADF8lfgc6ivOigaYkXHOuZRBtWe8R7UZ2YiXcbJ1dYNsjq40dn39rlNRxmVdPw==}
-    dependencies:
-      std: 0.1.40
-    dev: false
 
   /unbox-primitive/1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}
