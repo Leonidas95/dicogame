@@ -4,6 +4,7 @@ import { WinstonModule } from 'nest-winston';
 
 import { AppModule } from './app.module';
 import { transportsSetup } from './common/helpers/logger.helper';
+import { DatabaseService } from './database/database.service';
 
 async function bootstrap() {
   const PORT = 3000;
@@ -13,6 +14,9 @@ async function bootstrap() {
   const logger = new Logger('Bootstrap');
 
   app.enableCors();
+
+  const databaseService = app.get(DatabaseService);
+  await databaseService.enableShutdownHooks(app);
 
   await app.listen(PORT);
 
