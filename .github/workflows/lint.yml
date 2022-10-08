@@ -7,6 +7,11 @@ jobs:
   install-dependencies:
     uses: ./.github/workflows/install-dependencies.yml
 
+  install-pnpm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: pnpm/action-setup@v2
+
   run-lint:
     name: Run linters
     runs-on: ubuntu-latest
