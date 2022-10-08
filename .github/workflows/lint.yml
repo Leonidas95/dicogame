@@ -2,31 +2,15 @@ name: Lint
 
 on:
   push:
-  pull_request:
 
 jobs:
+  install-dependencies:
+    uses: ./.github/workflows/install-dependencies.yml
+
   run-lint:
     name: Run linters
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x]
-
+    needs: install-dependencies
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v3
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "pnpm"
-
-      - name: Install api dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Run linters
-        run: |
-          pnpm run format
-          pnpm run lint
+      - run: pnpm run format
+      - run: pnpm run lint
