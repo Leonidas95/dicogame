@@ -43,4 +43,6 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Test
-        run: pnpm run test
+        run: |
+          cd apps/api && pnpm exec prisma generate && cd ../../
+          pnpm run test
