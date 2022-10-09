@@ -1,4 +1,4 @@
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { WinstonModule } from 'nest-winston';
 
@@ -14,6 +14,7 @@ async function bootstrap() {
   const logger = new Logger('Bootstrap');
 
   app.enableCors();
+  app.useGlobalPipes(new ValidationPipe());
 
   const databaseService = app.get(DatabaseService);
   await databaseService.enableShutdownHooks(app);

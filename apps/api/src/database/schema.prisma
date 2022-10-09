@@ -15,3 +15,13 @@ model Language {
   iso  String @unique @db.VarChar(3)
   name String @db.VarChar(30)
 }
+
+model User {
+  id        String   @id @default(uuid()) @db.VarChar(36)
+  username  String?  @unique @db.VarChar(50)
+  email     String?  @unique @db.VarChar(255)
+  password  String?  @db.VarChar(128)
+  isAdmin   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
