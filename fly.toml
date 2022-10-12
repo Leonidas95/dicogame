@@ -1,15 +1,9 @@
-# fly.toml file generated for dicogame-api on 2022-10-11T21:39:09+02:00
-
 app = "dicogame-api"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
 
-[build]
-  builder = "heroku/buildpacks:20"
-
 [env]
-  PORT = "8080"
 
 [experimental]
   allowed_public_ports = []
