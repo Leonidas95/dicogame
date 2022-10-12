@@ -19,6 +19,7 @@ RUN pnpm install
 
 COPY --chown=node:node apps/api/ ./apps/api/
 
+RUN --mount=type=secret,id=DATABASE_URL DATABASE_URL="$(cat /run/secrets/DATABASE_URL)"
 RUN cd apps/api && pnpm exec prisma generate
 RUN cd apps/api && pnpm exec prisma migrate deploy
 
