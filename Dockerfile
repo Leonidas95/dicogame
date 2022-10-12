@@ -15,7 +15,7 @@ COPY --chown=node:node apps/api/package.json ./apps/api
 RUN mkdir -p packages/tsconfig
 COPY --chown=node:node packages/tsconfig/ ./packages/tsconfig/
 
-RUN pnpm install --frozen-lockfile --prod
+RUN pnpm install
 
 COPY --chown=node:node apps/api/ ./apps/api/
 
