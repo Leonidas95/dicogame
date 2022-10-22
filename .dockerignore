@@ -6,3 +6,4 @@ fly.toml
 
 apps/api/dist
 apps/api/node_modules
+apps/api/prisma/seed.ts
