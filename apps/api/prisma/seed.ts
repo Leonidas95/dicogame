@@ -8,7 +8,7 @@ const main = async () => {
       username: 'admin',
       email: 'admin@dicogame.github.io',
       isAdmin: true,
-      password: '$argon2id$v=19$m=4096,t=3,p=1$bmx1WXFMTDBsOWRnYXlrVQ$/9koyutLVoW4c8pJE6U7Og', // DicoGameAdmin
+      password: '$2b$10$IKi3W8fVfHWUWQH3If/7.uMLuhlfsh60UvBNEq2mZR76YkLN6miCC', // DicoGameAdmin
     },
     where: { username: 'admin' },
     update: {},
