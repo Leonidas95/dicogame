@@ -1,6 +1,4 @@
-# fly.toml file generated for dicogame on 2022-10-22T20:21:11+02:00
-
-app = "dicogame"
+app = "dicogame-api"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
