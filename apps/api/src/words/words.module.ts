@@ -1,11 +1,15 @@
 import { Module } from '@nestjs/common';
+
+import { AuthModule } from './../auth/auth.module';
+import { DatabaseModule } from './../database/database.module';
+import { DefinitionsModule } from './definitions/definitions.module';
 import { WordsController } from './words.controller';
 import { WordsService } from './words.service';
-import { DefinitionsModule } from './definitions/definitions.module';
 
 @Module({
+  imports: [DatabaseModule, AuthModule, DefinitionsModule],
   controllers: [WordsController],
   providers: [WordsService],
-  imports: [DefinitionsModule],
+  exports: [WordsService],
 })
 export class WordsModule {}
