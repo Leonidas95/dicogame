@@ -1,6 +1,6 @@
 import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
-import argon2 from 'argon2';
+import bcrypt from 'bcrypt';
 
 import { getLoggerProvider } from './../../test/helper';
 import { User } from './../users/user.class';
@@ -42,7 +42,7 @@ describe('AuthService', () => {
 
     beforeEach(() => {
       dto = { email: 'email', password: 'password' };
-      jest.spyOn(argon2, 'verify').mockResolvedValue(true);
+      bcrypt.compare = jest.fn().mockResolvedValue(true);
     });
 
     it('successfully logs in user', async () => {
@@ -54,7 +54,7 @@ describe('AuthService', () => {
     });
 
     it('finds user but password is incorrect and throws AuthBadCredentials', async () => {
-      jest.spyOn(argon2, 'verify').mockResolvedValue(false);
+      bcrypt.compare = jest.fn().mockResolvedValue(false);
 
       await expect(service.login(dto)).rejects.toThrowError(AuthBadCredentials);
       expect(usersService.findUserFromEmail).toHaveBeenCalled();

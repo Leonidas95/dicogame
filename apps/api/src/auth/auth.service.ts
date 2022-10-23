@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger, LoggerService } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
-import { verify } from 'argon2';
+import { compare } from 'bcrypt';
 
 import { UsersService } from './../users/users.service';
 import { AuthBadCredentials, AuthBadUserFromPayload } from './auth.exceptions';
@@ -47,7 +47,7 @@ export class AuthService {
   }
 
   private async verifyPassword(passwordHash: string, password: string) {
-    return verify(passwordHash, password);
+    return compare(password, passwordHash);
   }
 
   private generateToken(user: Pick<User, 'id' | 'isAdmin'>): { token: string } {
