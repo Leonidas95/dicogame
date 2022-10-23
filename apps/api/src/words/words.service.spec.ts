@@ -1,6 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { DatabaseService } from './../database/database.service';
+import { LanguagesService } from './../languages/languages.service';
+import { DefinitionsService } from './definitions/definitions.service';
 import { Word } from './word.class';
 import { WordNotFound } from './words.exceptions';
 import { WordsService } from './words.service';
@@ -23,7 +25,20 @@ describe('WordsService', () => {
             word: {
               findMany: jest.fn().mockResolvedValue(wordArray),
               findFirst: jest.fn().mockResolvedValue(oneWord),
+              create: jest.fn().mockResolvedValue(oneWord),
             },
+          })),
+        },
+        {
+          provide: LanguagesService,
+          useFactory: jest.fn(() => ({
+            getLanguage: jest.fn().mockResolvedValue({}),
+          })),
+        },
+        {
+          provide: DefinitionsService,
+          useFactory: jest.fn(() => ({
+            createDefinitions: jest.fn().mockResolvedValue({}),
           })),
         },
       ],
@@ -73,6 +88,20 @@ describe('WordsService', () => {
       expect(databaseService.word.findFirst).toHaveBeenCalledWith({
         where: { id: 'unknown-word-id' },
         include: { language: true, wordDefinitions: true },
+      });
+    });
+  });
+
+  describe('createWord', () => {
+    it('creates a word', async () => {
+      await service.createWord({
+        name: 'word-name',
+        languageId: 'languageId',
+        definitions: ['definition!'],
+      });
+
+      expect(databaseService.word.create).toHaveBeenCalledWith({
+        data: { name: 'WORD-NAME', languageId: 'languageId' },
       });
     });
   });
