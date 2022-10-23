@@ -58,4 +58,4 @@ EXPOSE $PORT
 
 WORKDIR /app/apps/api
 
-CMD ["npx", "prisma", "migrate", "deploy", "&&", "node", "dist/main"]
+CMD ["sh", "-c", "npx prisma migrate deploy && npm run start:prod"]
