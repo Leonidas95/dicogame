@@ -7,9 +7,6 @@ on:
 
 env:
   FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-  JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
-  JWT_SECRET: ${{ secrets.JWT_SECRET }}
-  PORT: ${{ secrets.PORT }}
 
 jobs:
   deploy:
@@ -18,4 +15,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: flyctl deploy --remote-only
+      - run: |
+          flyctl deploy --remote-only \
+          --env JWT_EXPIRES_IN="${{ secrets.JWT_EXPIRES_IN }}" \
+          --env JWT_SECRET="${{ secrets.JWT_SECRET }}" \
+          --env PORT="${{ secrets.PORT }}"
