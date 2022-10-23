@@ -39,6 +39,7 @@
     "winston": "^3.8.2"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@nestjs/cli": "^9.1.4",
     "@nestjs/schematics": "^9.0.3",
     "@nestjs/testing": "^9.1.4",

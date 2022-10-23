@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
 import { LanguagesModule } from './languages/languages.module';
 import { UsersModule } from './users/users.module';
+import { WordsModule } from './words/words.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { UsersModule } from './users/users.module';
     LanguagesModule,
     UsersModule,
     AuthModule,
+    WordsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

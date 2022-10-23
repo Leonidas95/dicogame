@@ -11,9 +11,10 @@ datasource db {
 }
 
 model Language {
-  id   String @id @default(uuid()) @db.VarChar(36)
-  iso  String @unique @db.VarChar(3)
-  name String @db.VarChar(30)
+  id    String @id @default(uuid()) @db.VarChar(36)
+  iso   String @unique @db.VarChar(3)
+  name  String @db.VarChar(30)
+  words Word[]
 }
 
 model User {
@@ -24,4 +25,23 @@ model User {
   isAdmin   Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Word {
+  id              String           @id @default(uuid()) @db.VarChar(36)
+  name            String           @db.VarChar(50)
+  language        Language         @relation(fields: [languageId], references: [id])
+  languageId      String           @db.VarChar(36)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @default(now()) @updatedAt
+  wordDefinitions WordDefinition[]
+}
+
+model WordDefinition {
+  id         String   @id @default(uuid()) @db.VarChar(36)
+  wordId     String   @db.VarChar(36)
+  word       Word     @relation(fields: [wordId], references: [id])
+  definition String   @db.VarChar(300)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
 }
