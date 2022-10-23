@@ -1,0 +1,9 @@
+node_modules
+npm-debug.log
+README.md
+LICENSE
+fly.toml
+
+apps/api/dist
+apps/api/node_modules
+apps/api/prisma/seed.ts
