@@ -1,4 +1,4 @@
-type MethodType = 'createLobby' | 'joinLobby';
+type MethodType = 'createLobby' | 'updateLobby' | 'joinLobby' | 'startGame';
 
 export class RequestDto {
   method: MethodType;

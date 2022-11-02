@@ -12,9 +12,8 @@ import { Server, Socket } from 'socket.io';
 import { CreateLobbyDto } from './dto/create-lobby.dto';
 import { JoinLobbyDto } from './dto/join-lobby.dto';
 import { RequestDto } from './dto/request.dto';
+import { UpdateLobbyDto } from './dto/update-lobby.dto';
 import { LobbiesService } from './lobbies.service';
-import { Lobby } from './lobby.class';
-import { Player } from './players/player.class';
 
 @Injectable()
 @WebSocketGateway({ namespace: 'lobbies', cors: { origin: '*', methods: ['GET', 'POST'] } })
@@ -43,14 +42,18 @@ export class LobbiesGateway implements OnGatewayConnection {
     switch (method) {
       case 'createLobby':
         return this.lobbiesService.createLobby(new CreateLobbyDto(data), socket);
+      case 'updateLobby':
+        return this.lobbiesService.updateLobby(new UpdateLobbyDto(data), socket);
       case 'joinLobby':
         return this.lobbiesService.joinLobby(new JoinLobbyDto(data), socket);
+      case 'startGame':
+        return this.lobbiesService.startGame(socket);
     }
   }
 
   private close(socket: Socket): void {
     this.logger.debug(`Socket is disconnecting [socketId:${socket.id}]`);
-    const { lobby, player } = this.getLobbyAndPlayerFromSocket(socket);
+    const { lobby, player } = this.lobbiesService.getLobbyAndPlayerFromSocket(socket);
 
     if (lobby?.closed) return;
 
@@ -68,13 +71,5 @@ export class LobbiesGateway implements OnGatewayConnection {
 
       socket.leave(lobby.id);
     }
-  }
-
-  private getLobbyAndPlayerFromSocket(socket: Socket): { lobby?: Lobby; player?: Player } {
-    const roomId = [...socket.rooms].find((socketRoomId) => socketRoomId !== socket.id);
-    const lobby = this.lobbiesService.getLobby(roomId);
-    const player = lobby?.players.find(({ id }) => id === socket.id);
-
-    return { lobby, player };
   }
 }

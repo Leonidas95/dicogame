@@ -25,7 +25,7 @@ describe('LobbiesController', () => {
     controller = module.get<LobbiesController>(LobbiesController);
     service = module.get<LobbiesService>(LobbiesService);
 
-    lobby = new Lobby('lobby-name', 3, false);
+    lobby = new Lobby('lobby-name', 3, false, 3);
     lobbies = [lobby];
   });
 

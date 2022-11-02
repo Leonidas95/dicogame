@@ -13,10 +13,11 @@ export class Lobby extends EventEmitter {
   private _name: string;
   private _maxPlayers: number;
   private _isPrivate: boolean;
+  private _numberOfRounds: number;
   private _rounds: Round[];
   private _players: Player[];
 
-  constructor(name: string, maxPlayers: number, isPrivate: boolean) {
+  constructor(name: string, maxPlayers: number, isPrivate: boolean, numberOfRounds: number) {
     super();
     this.logger = new Logger(this.constructor.name);
     this.setMaxListeners(Infinity);
@@ -25,6 +26,7 @@ export class Lobby extends EventEmitter {
     this._name = name;
     this._maxPlayers = maxPlayers;
     this._isPrivate = isPrivate;
+    this._numberOfRounds = numberOfRounds;
     this._rounds = [];
     this._players = [];
     this.logger.debug(`New Lobby [${this.id}]`);
@@ -60,6 +62,20 @@ export class Lobby extends EventEmitter {
 
   public set isPrivate(value: boolean) {
     this._isPrivate = value;
+  }
+
+  public get numberOfRounds(): number {
+    return this._numberOfRounds;
+  }
+
+  public set numberOfRounds(value: number) {
+    if (value < 2) {
+      this._numberOfRounds = 2;
+    } else if (value > 10) {
+      this._numberOfRounds = 10;
+    } else {
+      this._numberOfRounds = value;
+    }
   }
 
   public get rounds(): Round[] {
@@ -98,5 +114,17 @@ export class Lobby extends EventEmitter {
     if (index !== -1) {
       this.players.splice(index, 1);
     }
+  }
+
+  /**
+   * Checks if the player is the author of the lobby based on the `createdAt` property
+   *
+   * @param player
+   * @returns true if the player is the oldest in the lobby
+   */
+  isPlayerAuthor(player: Player): boolean {
+    const players = [...this.players].sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
+
+    return players[0].id === player.id;
   }
 }

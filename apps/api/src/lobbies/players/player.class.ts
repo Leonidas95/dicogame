@@ -5,11 +5,14 @@ export class Player {
   readonly socket: Socket;
   readonly name: string;
   private _score: number;
+  readonly createdAt: Date;
 
   constructor(socket: Socket, name: string) {
     this.id = socket.id;
     this.socket = socket;
     this.name = name;
+    this._score = 0;
+    this.createdAt = new Date();
   }
 
   public get score(): number {
