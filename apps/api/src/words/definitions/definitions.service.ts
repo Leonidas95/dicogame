@@ -8,7 +8,10 @@ export class DefinitionsService {
 
   async createDefinitions(definitions: string[], wordId: string) {
     return this.databaseService.wordDefinition.createMany({
-      data: definitions.map((definition) => ({ definition: this.formatWordDefinition(definition), wordId })),
+      data: definitions.map((definition) => ({
+        definition: this.formatWordDefinition(definition),
+        wordId,
+      })),
     });
   }
 

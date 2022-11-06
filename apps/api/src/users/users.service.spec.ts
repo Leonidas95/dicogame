@@ -9,7 +9,9 @@ describe('UsersService', () => {
   let service: UsersService;
   let databaseService: DatabaseService;
 
-  const oneUser = Object.assign<User, Partial<User>>(new User(), { id: 'user-id' });
+  const oneUser = Object.assign<User, Partial<User>>(new User(), {
+    id: 'user-id',
+  });
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({

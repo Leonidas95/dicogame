@@ -14,7 +14,9 @@ describe('AuthService', () => {
   let usersService: UsersService;
   let jwtService: JwtService;
 
-  const oneUser = Object.assign<User, Partial<User>>(new User(), { id: 'user-id' });
+  const oneUser = Object.assign<User, Partial<User>>(new User(), {
+    id: 'user-id',
+  });
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -28,7 +30,10 @@ describe('AuthService', () => {
             findUserFromId: jest.fn().mockResolvedValue(oneUser),
           })),
         },
-        { provide: JwtService, useFactory: jest.fn(() => ({ sign: jest.fn(() => 'jwt-string') })) },
+        {
+          provide: JwtService,
+          useFactory: jest.fn(() => ({ sign: jest.fn(() => 'jwt-string') })),
+        },
       ],
     }).compile();
 

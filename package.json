@@ -11,11 +11,21 @@
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
-    "format": "turbo run format",
-    "test": "turbo run test"
+    "format": "prettier --check \"**/*.{ts,tsx,md}\"",
+    "test": "turbo run test",
+    "prepare": "husky install"
   },
   "devDependencies": {
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
     "turbo": "^1.5.5"
+  },
+  "lint-staged": {
+    "{apps,packages}/**/*.{ts,tsx,md}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   },
   "engines": {
     "node": ">=18.0.0"

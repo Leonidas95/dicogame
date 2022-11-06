@@ -11,7 +11,10 @@ describe('WordsService', () => {
   let service: WordsService;
   let databaseService: DatabaseService;
 
-  const oneWord = Object.assign<Word, Partial<Word>>(new Word(), { id: 'word-id', name: 'word-name' });
+  const oneWord = Object.assign<Word, Partial<Word>>(new Word(), {
+    id: 'word-id',
+    name: 'word-name',
+  });
 
   const wordArray = [oneWord];
 
