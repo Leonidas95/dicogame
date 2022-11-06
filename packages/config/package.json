@@ -1,5 +1,18 @@
 {
   "name": "config",
   "version": "0.0.1",
-  "main": "index.js"
+  "files": [
+    "eslint-library.js",
+    "eslint-nest.js",
+    "eslint-vite.js"
+  ],
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.42.0",
+    "@typescript-eslint/parser": "^5.42.0",
+    "eslint": "^8.27.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^3.5.2",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1"
+  }
 }

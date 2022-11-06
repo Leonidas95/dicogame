@@ -16,7 +16,9 @@ export class WordsService {
   ) {}
 
   async getWords(): Promise<Word[]> {
-    return this.databaseService.word.findMany({ include: { language: true, wordDefinitions: true } });
+    return this.databaseService.word.findMany({
+      include: { language: true, wordDefinitions: true },
+    });
   }
 
   async getWord(id: string): Promise<Word> {
@@ -38,7 +40,9 @@ export class WordsService {
     // check if language exists
     await this.languagesService.getLanguage(languageId);
 
-    const word = await this.databaseService.word.create({ data: { name: name.toUpperCase(), languageId } });
+    const word = await this.databaseService.word.create({
+      data: { name: name.toUpperCase(), languageId },
+    });
 
     await this.definitionsService.createDefinitions(definitions, word.id);
 

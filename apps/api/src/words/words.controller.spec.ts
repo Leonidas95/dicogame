@@ -17,7 +17,10 @@ describe('WordsController', () => {
       providers: [
         {
           provide: WordsService,
-          useFactory: jest.fn(() => ({ getWords: jest.fn(() => []), getWord: jest.fn(() => word) })),
+          useFactory: jest.fn(() => ({
+            getWords: jest.fn(() => []),
+            getWord: jest.fn(() => word),
+          })),
         },
       ],
     }).compile();
@@ -25,7 +28,10 @@ describe('WordsController', () => {
     controller = module.get<WordsController>(WordsController);
     service = module.get<WordsService>(WordsService);
 
-    word = Object.assign<Word, Partial<Word>>(new Word(), { id: 'word-id', name: 'word-name' });
+    word = Object.assign<Word, Partial<Word>>(new Word(), {
+      id: 'word-id',
+      name: 'word-name',
+    });
     words = [word];
   });
 

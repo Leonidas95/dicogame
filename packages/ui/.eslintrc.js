@@ -1,5 +1,5 @@
 module.exports = {
-  ...require('config/eslint-nest'),
+  ...require('config/eslint-library'),
   parserOptions: {
     root: true,
     project: 'tsconfig.json',
