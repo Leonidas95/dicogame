@@ -1,9 +1,8 @@
-import classNames from 'classnames';
 import { AiOutlineUser } from 'react-icons/ai';
 import { BiDonateHeart } from 'react-icons/bi';
 import { IoGameControllerOutline } from 'react-icons/io5';
 import { RiQuestionnaireFill, RiSettings4Fill } from 'react-icons/ri';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 
 import { RouteName, Routes } from '../../routes';
@@ -17,11 +16,8 @@ export const SideMenu = () => {
   return (
     <aside className="overflow-y-auto overflow-x-hidden flex-grow">
       <h1 className="flex items-center h-14 px-5 border-b">
-        <NavLink
-          to={Routes[RouteName.HOME]}
-          className={({ isActive }) => classNames({ 'decoration-green-500 underline underline-offset-8': isActive })}
-        >
-          <FormattedMessage id="appName" />
+        <NavLink to={Routes[RouteName.HOME]}>
+          <img src="logo.svg" alt={intl.formatMessage({ id: 'appName' })} />
         </NavLink>
       </h1>
       <ul className="flex flex-col py-4 space-y-1">
