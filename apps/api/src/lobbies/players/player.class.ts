@@ -1,11 +1,12 @@
+import { Expose } from 'class-transformer';
 import { Socket } from 'socket.io';
 
 export class Player {
-  readonly id: string;
+  @Expose() readonly id: string;
   readonly socket: Socket;
-  readonly name: string;
+  @Expose() readonly name: string;
   private _score: number;
-  readonly createdAt: Date;
+  @Expose() readonly createdAt: Date;
 
   constructor(socket: Socket, name: string) {
     this.id = socket.id;
@@ -15,6 +16,7 @@ export class Player {
     this.createdAt = new Date();
   }
 
+  @Expose({ name: 'score' })
   public get score(): number {
     return this._score;
   }

@@ -1,27 +1,28 @@
 import { EventEmitter } from 'events';
 
 import { Logger } from '@nestjs/common';
+import { Exclude, Expose } from 'class-transformer';
 import { Socket } from 'socket.io';
 
 import { Player } from './players/player.class';
 import { Round } from './rounds/round.class';
 
 export class Lobby extends EventEmitter {
-  private readonly logger: Logger;
-  readonly id: string;
-  private _closed: boolean;
-  private _name: string;
-  private _maxPlayers: number;
-  private _isPrivate: boolean;
-  private _numberOfRounds: number;
-  private _rounds: Round[];
-  private _players: Player[];
+  @Exclude() private readonly logger: Logger;
+  @Exclude() private readonly _id: string;
+  @Exclude() private _closed: boolean;
+  @Exclude() private _name: string;
+  @Exclude() private _maxPlayers: number;
+  @Exclude() private _isPrivate: boolean;
+  @Exclude() private _numberOfRounds: number;
+  @Exclude() private _rounds: Round[];
+  @Exclude() private _players: Player[];
 
   constructor(name: string, maxPlayers: number, isPrivate: boolean, numberOfRounds: number) {
     super();
     this.logger = new Logger(this.constructor.name);
     this.setMaxListeners(Infinity);
-    this.id = Math.random().toString(36).substring(2, 7).toLowerCase();
+    this._id = Math.random().toString(36).substring(2, 7).toLowerCase();
     this._closed = false;
     this._name = name;
     this._maxPlayers = maxPlayers;
@@ -29,7 +30,12 @@ export class Lobby extends EventEmitter {
     this._numberOfRounds = numberOfRounds;
     this._rounds = [];
     this._players = [];
-    this.logger.debug(`New Lobby [${this.id}]`);
+    this.logger.debug(`New Lobby [${this._id}]`);
+  }
+
+  @Expose({ name: 'id' })
+  public get id(): string {
+    return this._id;
   }
 
   public get closed(): boolean {
@@ -40,6 +46,7 @@ export class Lobby extends EventEmitter {
     this._closed = value;
   }
 
+  @Expose({ name: 'name' })
   public get name(): string {
     return this._name;
   }
@@ -48,6 +55,7 @@ export class Lobby extends EventEmitter {
     this._name = value;
   }
 
+  @Expose({ name: 'maxPlayers' })
   public get maxPlayers(): number {
     return this._maxPlayers;
   }
@@ -64,6 +72,7 @@ export class Lobby extends EventEmitter {
     this._isPrivate = value;
   }
 
+  @Expose({ name: 'numberOfRounds' })
   public get numberOfRounds(): number {
     return this._numberOfRounds;
   }
@@ -86,6 +95,7 @@ export class Lobby extends EventEmitter {
     this._rounds = value;
   }
 
+  @Expose({ name: 'players' })
   public get players(): Player[] {
     return this._players;
   }

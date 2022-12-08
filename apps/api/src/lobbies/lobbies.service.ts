@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
+import { instanceToPlain } from 'class-transformer';
 import { Socket } from 'socket.io';
 
 import { CreateLobbyDto } from './dto/create-lobby.dto';
@@ -9,22 +10,24 @@ import { Player } from './players/player.class';
 
 @Injectable()
 export class LobbiesService {
-  private readonly _lobbies: Map<string, Lobby>;
+  private readonly logger: Logger;
+  private readonly lobbies: Map<string, Lobby>;
 
   constructor() {
-    this._lobbies = new Map();
+    this.logger = new Logger(this.constructor.name);
+    this.lobbies = new Map();
   }
 
-  getLobbies(): Lobby[] {
-    return Array.from(this._lobbies, ([, lobby]) => lobby);
+  getLobbies() {
+    return Array.from(this.lobbies, ([, lobby]) => instanceToPlain(lobby, { strategy: 'excludeAll' }));
   }
 
   getLobby(id: string): Lobby | null {
-    if (!this._lobbies.has(id)) {
+    if (!this.lobbies.has(id)) {
       return null;
     }
 
-    return this._lobbies.get(id);
+    return this.lobbies.get(id);
   }
 
   getLobbyAndPlayerFromSocket(socket: Socket): { lobby?: Lobby; player?: Player } {
@@ -39,15 +42,16 @@ export class LobbiesService {
     const { name, maxPlayers, isPrivate, playerName, rounds } = data;
     const lobby = new Lobby(name, maxPlayers, isPrivate, rounds);
 
-    lobby.on('close', () => {
-      this._lobbies.delete(lobby.id);
+    lobby.on('closed', () => {
+      this.logger.debug(`Closing [Lobby:${lobby.id}]`);
+      this.lobbies.delete(lobby.id);
     });
 
-    this._lobbies.set(lobby.id, lobby);
+    this.lobbies.set(lobby.id, lobby);
 
     lobby.addPlayer(socket, playerName);
 
-    return lobby;
+    return instanceToPlain(lobby, { strategy: 'excludeAll' });
   }
 
   updateLobby(dto: UpdateLobbyDto, socket: Socket) {

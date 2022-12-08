@@ -85,6 +85,7 @@ export const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
         ButtonVariantMap[variant][color],
         ButtonSizeMap[size],
         { [ButtonDisabledMap[variant][color]]: disabled || loading },
+        className,
       )}
     >
       {children}

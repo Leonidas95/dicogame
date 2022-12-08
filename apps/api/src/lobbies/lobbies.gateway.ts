@@ -7,6 +7,7 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
+import { validateOrReject } from 'class-validator';
 import { Server, Socket } from 'socket.io';
 
 import { CreateLobbyDto } from './dto/create-lobby.dto';
@@ -35,17 +36,17 @@ export class LobbiesGateway implements OnGatewayConnection {
   }
 
   @SubscribeMessage('request')
-  onRequest(@ConnectedSocket() socket: Socket, @MessageBody() request: RequestDto) {
+  async onRequest(@ConnectedSocket() socket: Socket, @MessageBody() request: RequestDto) {
     const { method, data } = request;
     this.logger.debug(`New request [${method}]`);
 
     switch (method) {
       case 'createLobby':
-        return this.lobbiesService.createLobby(new CreateLobbyDto(data), socket);
+        return this.lobbiesService.createLobby(await this.validateRequest(new CreateLobbyDto(data)), socket);
       case 'updateLobby':
-        return this.lobbiesService.updateLobby(new UpdateLobbyDto(data), socket);
+        return this.lobbiesService.updateLobby(await this.validateRequest(new UpdateLobbyDto(data)), socket);
       case 'joinLobby':
-        return this.lobbiesService.joinLobby(new JoinLobbyDto(data), socket);
+        return this.lobbiesService.joinLobby(await this.validateRequest(new JoinLobbyDto(data)), socket);
       case 'startGame':
         return this.lobbiesService.startGame(socket);
     }
@@ -71,5 +72,10 @@ export class LobbiesGateway implements OnGatewayConnection {
 
       socket.leave(lobby.id);
     }
+  }
+
+  private async validateRequest(obj: any) {
+    await validateOrReject(obj);
+    return obj;
   }
 }

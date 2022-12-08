@@ -14,7 +14,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["vite/client"]
+    "types": ["vite/client", "node"]
   },
   "include": ["src"]
 }
