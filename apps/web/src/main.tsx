@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+import { SocketProvider } from './contexts/SocketContext';
 import './index.css';
 import { LocaleProvider } from './locales/LocaleProvider';
 import { Home } from './pages/Home';
@@ -30,7 +31,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <LocaleProvider>
-        <RouterProvider router={router} />
+        <SocketProvider>
+          <RouterProvider router={router} />
+        </SocketProvider>
       </LocaleProvider>
     </QueryClientProvider>
   </React.StrictMode>,
