@@ -1,6 +1,6 @@
 import { useCallback, useContext } from 'react';
 
-import { SocketContext } from '../../contexts/SocketContext';
+import { SocketContext } from '../../../../contexts/SocketContext';
 
 interface CreateLobby {
   name: string;
