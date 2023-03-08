@@ -11,6 +11,7 @@ import { HowToPlay } from './pages/HowToPlay';
 import { Root } from './pages/Root';
 import { Error } from './pages/errors';
 import { Lobbies } from './pages/lobbies';
+import { Lobby } from './pages/lobbies/components/Lobby';
 import { RouteName, Routes } from './routes';
 import { queryClient } from './utils/queryClient';
 
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
     children: [
       { path: Routes[RouteName.HOME], element: <Home /> },
       { path: Routes[RouteName.LOBBIES], element: <Lobbies /> },
+      { path: Routes[RouteName.LOBBY], element: <Lobby /> },
       { path: Routes[RouteName.HOW_TO_PLAY], element: <HowToPlay /> },
     ],
     errorElement: <Error />,

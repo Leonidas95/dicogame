@@ -6,5 +6,8 @@ DicoGame monorepo. React and nestjs
 
 ```bash
 pnpm install
+cd apps/api/
+pnpm exec prisma generate
+cd ../../
 pnpm run dev
 ```
