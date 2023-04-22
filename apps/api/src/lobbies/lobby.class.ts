@@ -114,7 +114,10 @@ export class Lobby extends EventEmitter {
     this.logger.debug(`New player [${socket.id}] in lobby [${this.id}]`);
     socket.join(this.id);
 
-    this._players.push(new Player(socket, name));
+    const player = new Player(socket, name);
+    this._players.push(player);
+
+    return player;
   }
 
   deletePlayer(playerId: string) {

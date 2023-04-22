@@ -10,6 +10,7 @@ import {
 import { validateOrReject } from 'class-validator';
 import { Server, Socket } from 'socket.io';
 
+import { NotificationEventEnum } from './constants';
 import { CreateLobbyDto } from './dto/create-lobby.dto';
 import { JoinLobbyDto } from './dto/join-lobby.dto';
 import { RequestDto } from './dto/request.dto';
@@ -59,9 +60,10 @@ export class LobbiesGateway implements OnGatewayConnection {
     if (lobby?.closed) return;
 
     if (lobby && player) {
-      socket
-        .to(lobby.id)
-        .emit('notification', { event: 'playerLeft', data: { id: player.id, playerName: player.name } });
+      socket.to(lobby.id).emit('notification', {
+        event: NotificationEventEnum.PLAYER_LEFT,
+        data: { id: player.id, playerName: player.name },
+      });
 
       lobby.deletePlayer(socket.id);
 

@@ -4,7 +4,7 @@ import { io, Socket } from 'socket.io-client';
 
 type MethodType = 'createLobby' | 'updateLobby' | 'joinLobby' | 'startGame';
 
-type EventType = 'playerLeft';
+type EventType = 'playerJoined' | 'playerLeft';
 
 type SocketCallback = (event: EventType, data: any) => void;
 

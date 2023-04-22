@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { instanceToPlain } from 'class-transformer';
 import { Socket } from 'socket.io';
 
+import { NotificationEventEnum } from './constants';
 import { CreateLobbyDto } from './dto/create-lobby.dto';
 import { JoinLobbyDto } from './dto/join-lobby.dto';
 import { UpdateLobbyDto } from './dto/update-lobby.dto';
@@ -71,8 +72,17 @@ export class LobbiesService {
     const lobby = this.getLobby(lobbyId);
 
     if (lobby) {
-      lobby.addPlayer(socket, playerName);
+      const player = lobby.addPlayer(socket, playerName);
+      this.logger.debug(`Player [${player.id}] joined lobby [${lobbyId}]`);
+      const plainPlayer = instanceToPlain(player, { strategy: 'excludeAll' });
+      socket.to(lobby.id).emit('notification', {
+        event: NotificationEventEnum.PLAYER_JOINED,
+        data: plainPlayer,
+      });
+      return plainPlayer;
     }
+
+    return null;
   }
 
   // eslint-disable-next-line
