@@ -9,7 +9,7 @@ export default function AppRoutes() {
 		<BrowserRouter basename={import.meta.env.BASE_URL}>
 			<Routes>
 				<Route path="/" element={<HomePage />} />
-				<Route path="/join/:lobbyId" element={<JoinPage />} />
+				<Route path="/join/:lobbyId?" element={<JoinPage />} />
 				<Route path="/lobby/:lobbyId" element={<LobbyPage />} />
 				<Route path="/game/:lobbyId" element={<GamePage />} />
 			</Routes>

@@ -13,34 +13,12 @@ import { Layout, PageContainer } from '../ui/layout';
 export default function JoinPage() {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
-	const { lobbyId: urlLobbyId } = useParams<{ lobbyId: string }>();
+	const { lobbyId: urlLobbyId } = useParams<{ lobbyId: string | undefined }>();
 	const [nickname, setNickname] = useState('');
-	const [lobbyExists, setLobbyExists] = useState<boolean | null>(null);
-	const {
-		joinLobby,
-		loading,
-		error,
-		lobbyId: currentLobbyId,
-		api,
-	} = useGameStore();
-	const [nicknameInputId] = useId();
-
-	// Check if lobby exists when component mounts
-	useEffect(() => {
-		const checkLobbyExists = async () => {
-			if (!urlLobbyId || !api) return;
-
-			try {
-				const lobbies = await api.getLobbies();
-				const lobby = lobbies.find((l) => l.id === urlLobbyId);
-				setLobbyExists(!!lobby);
-			} catch (_e) {
-				setLobbyExists(false);
-			}
-		};
-
-		checkLobbyExists();
-	}, [urlLobbyId, api]);
+	const [urlLobbyIsSet] = useState<boolean>(!!urlLobbyId);
+	const { joinLobby, loading, error, lobbyId: currentLobbyId } = useGameStore();
+	const [nicknameInputId, lobbyIdInputId] = useId();
+	const [lobbyId, setLobbyId] = useState('');
 
 	// Navigate to lobby when successfully joined
 	useEffect(() => {
@@ -51,10 +29,11 @@ export default function JoinPage() {
 
 	const handleJoinLobby = async (e?: React.FormEvent) => {
 		e?.preventDefault();
-		if (!nickname.trim() || !urlLobbyId) return;
+		const finalLobbyId = urlLobbyId ?? lobbyId;
+		if (!nickname.trim() || !finalLobbyId) return;
 
 		try {
-			await joinLobby(urlLobbyId, nickname.trim());
+			await joinLobby(finalLobbyId, nickname.trim());
 			// Navigation will be handled by the useEffect above
 		} catch (_e) {
 			// Error is handled by the store
@@ -64,55 +43,6 @@ export default function JoinPage() {
 	const handleBack = () => {
 		navigate('/');
 	};
-
-	// Show loading while checking if lobby exists
-	if (lobbyExists === null) {
-		return (
-			<Layout>
-				<PageContainer>
-					<GameCard className="w-full max-w-md text-center">
-						<div className="animate-pulse">
-							<div className="h-4 bg-gray-200 rounded w-3/4 mx-auto mb-4"></div>
-							<div className="h-4 bg-gray-200 rounded w-1/2 mx-auto"></div>
-						</div>
-					</GameCard>
-				</PageContainer>
-			</Layout>
-		);
-	}
-
-	// Show error if lobby doesn't exist
-	if (lobbyExists === false) {
-		return (
-			<Layout>
-				<PageContainer>
-					<Header subtitle={t('joinExistingGame')} />
-
-					<GameCard className="w-full max-w-md text-center">
-						<div className="space-y-4">
-							<div className="text-red-500">
-								<h2 className="text-xl font-semibold text-red-700 dark:text-red-400">
-									{t('gameNotFound')}
-								</h2>
-								<p className="text-red-600 dark:text-red-300 mt-2">
-									{t('gameCodeDoesNotExist', { code: urlLobbyId })}
-								</p>
-							</div>
-
-							<Button
-								onClick={handleBack}
-								variant="outline"
-								className="w-full h-12"
-							>
-								<ArrowLeft className="mr-2 h-4 w-4" />
-								{t('backToHome')}
-							</Button>
-						</div>
-					</GameCard>
-				</PageContainer>
-			</Layout>
-		);
-	}
 
 	return (
 		<Layout>
@@ -128,15 +58,40 @@ export default function JoinPage() {
 							<p className="text-gray-600 dark:text-gray-400 mt-2">
 								{t('joinGameNicknameSubtitle')}
 							</p>
-							<div className="mt-3 bg-green-100 dark:bg-green-900/30 p-3 rounded-lg">
-								<p className="text-sm text-green-700 dark:text-green-300">
-									{t('gameCode')}:{' '}
-									<span className="font-mono font-bold text-lg">
-										{urlLobbyId}
-									</span>
-								</p>
-							</div>
+							{urlLobbyIsSet && (
+								<div className="mt-3 bg-green-100 dark:bg-green-900/30 p-3 rounded-lg">
+									<p className="text-sm text-green-700 dark:text-green-300">
+										{t('gameCode')}:{' '}
+										<span className="font-mono font-bold text-lg">
+											{urlLobbyId}
+										</span>
+									</p>
+								</div>
+							)}
 						</div>
+
+						{!urlLobbyIsSet && (
+							<div>
+								<Label
+									htmlFor={lobbyIdInputId}
+									className="text-sm font-medium text-gray-700 dark:text-gray-300"
+								>
+									{t('gameCode')}
+								</Label>
+								<Input
+									id={lobbyIdInputId}
+									type="text"
+									value={lobbyId}
+									onChange={(e) => setLobbyId(e.target.value.toUpperCase())}
+									placeholder={t('enterCodePlaceholder')}
+									className="mt-1 h-12 text-base font-mono text-center tracking-widest"
+									maxLength={4}
+									pattern="[A-Z0-9]{4}"
+									required
+									autoFocus
+								/>
+							</div>
+						)}
 
 						<div>
 							<Label
@@ -154,7 +109,7 @@ export default function JoinPage() {
 								className="mt-1 h-12 text-base"
 								maxLength={20}
 								required
-								autoFocus
+								autoFocus={urlLobbyIsSet}
 							/>
 						</div>
 

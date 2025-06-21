@@ -17,16 +17,15 @@ export default function HomePage() {
 	const navigate = useNavigate();
 	const [rounds, setRounds] = useState(2);
 	const [nickname, setNickname] = useState('');
-	const [lobbyId, setLobbyId] = useState('');
 	const [language, setLanguage] = useState<Language | null>(null);
-	const [mode, setMode] = useState<'select' | 'create' | 'join'>('select');
+	const [mode, setMode] = useState<'select' | 'create'>('select');
 	const {
 		createLobby,
 		loading,
 		error,
 		lobbyId: currentLobbyId,
 	} = useGameStore();
-	const [lobbyIdInputId, nicknameInputId, roundsInputId] = useId();
+	const [nicknameInputId, roundsInputId] = useId();
 
 	// Navigate to lobby when lobbyId is set in store
 	useEffect(() => {
@@ -48,9 +47,7 @@ export default function HomePage() {
 
 	const handleJoinLobby = async (e?: React.FormEvent) => {
 		e?.preventDefault();
-		if (!lobbyId.trim()) return;
-		// Navigate to join page instead of directly joining
-		navigate(`/join/${lobbyId.trim().toUpperCase()}`);
+		navigate(`/join`);
 	};
 
 	return (
@@ -79,7 +76,7 @@ export default function HomePage() {
 							</Button>
 
 							<Button
-								onClick={() => setMode('join')}
+								onClick={handleJoinLobby}
 								variant="outline"
 								className="w-full h-12 text-lg font-medium border-2 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200"
 							>
@@ -176,61 +173,6 @@ export default function HomePage() {
 									<p className="text-red-700 text-sm font-medium">{error}</p>
 								</div>
 							)}
-						</form>
-					)}
-
-					{mode === 'join' && (
-						<form onSubmit={handleJoinLobby} className="space-y-6">
-							<div className="text-center">
-								<h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
-									{t('joinGameTitle')}
-								</h2>
-								<p className="text-gray-600 dark:text-gray-400 mt-2">
-									{t('joinGameSubtitle')}
-								</p>
-							</div>
-
-							<div className="space-y-4">
-								<div>
-									<Label
-										htmlFor={lobbyIdInputId}
-										className="text-sm font-medium text-gray-700 dark:text-gray-300"
-									>
-										{t('gameCode')}
-									</Label>
-									<Input
-										id={lobbyIdInputId}
-										type="text"
-										value={lobbyId}
-										onChange={(e) => setLobbyId(e.target.value.toUpperCase())}
-										placeholder={t('enterCodePlaceholder')}
-										className="mt-1 h-12 text-base font-mono text-center tracking-widest"
-										maxLength={4}
-										pattern="[A-Z0-9]{4}"
-										required
-									/>
-								</div>
-							</div>
-
-							<div className="flex space-x-3">
-								<Button
-									type="button"
-									onClick={() => setMode('select')}
-									variant="outline"
-									className="flex-1 h-12"
-								>
-									<ArrowLeft className="mr-2 h-4 w-4" />
-									{t('back')}
-								</Button>
-								<Button
-									type="submit"
-									disabled={!lobbyId.trim()}
-									className="flex-1 h-12 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50"
-								>
-									<LogIn className="mr-2 h-4 w-4" />
-									{loading ? t('loading') : t('continue')}
-								</Button>
-							</div>
 						</form>
 					)}
 
