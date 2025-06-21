@@ -1,0 +1,197 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Performance & Security
+
+## Performance Optimization
+
+### React Optimization
+- Use **React.memo** for expensive components
+- Use **useMemo** and **useCallback** appropriately
+- Implement **lazy loading** for routes
+- Use **virtualization** for large lists
+- Optimize **bundle size** with code splitting
+
+### State Optimization
+- Minimize re-renders with proper state structure
+- Use **selectors** for derived state
+- Implement **debouncing** for frequent updates
+- Use **local storage** for persistence
+
+### Bundle Optimization
+```typescript
+// Lazy load routes
+const GamePage = lazy(() => import('./components/Game/GamePage'));
+const LobbyPage = lazy(() => import('./components/Lobby/LobbyPage'));
+
+// Code splitting
+const HeavyComponent = lazy(() => import('./components/HeavyComponent'));
+```
+
+### Memory Management
+- **Cleanup** subscriptions and timers
+- **Unmount** components properly
+- **Avoid** memory leaks in effects
+- **Optimize** image loading and caching
+
+## Security Patterns
+
+### Input Validation
+- Validate all user inputs
+- Sanitize data before rendering
+- Use **TypeScript** for type safety
+- Implement **CSRF protection** for forms
+
+### Data Handling
+- Never expose sensitive data in client code
+- Use **environment variables** for configuration
+- Implement proper **authentication** and **authorization**
+- Validate **URL parameters** and **query strings**
+
+### XSS Prevention
+```typescript
+// Sanitize user input
+const sanitizeInput = (input: string) => {
+	return input.replace(/[<>]/g, '');
+};
+
+// Use React's built-in XSS protection
+const UserContent = ({ content }: { content: string }) => {
+	return <div>{content}</div>; // React automatically escapes
+};
+```
+
+### Authentication & Authorization
+```typescript
+// Check user permissions
+const canPerformAction = (action: string, user: User) => {
+	return user.permissions.includes(action);
+};
+
+// Route protection
+const ProtectedRoute = ({ children, requiredPermission }: Props) => {
+	const user = useUser();
+	
+	if (!user || !canPerformAction(requiredPermission, user)) {
+		return <Navigate to="/login" />;
+	}
+	
+	return children;
+};
+```
+
+## Error Handling
+
+### Error Boundaries
+```typescript
+class ErrorBoundary extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = { hasError: false };
+	}
+	
+	static getDerivedStateFromError(error) {
+		return { hasError: true };
+	}
+	
+	componentDidCatch(error, errorInfo) {
+		// Log error to service
+		console.error('Error caught by boundary:', error, errorInfo);
+	}
+	
+	render() {
+		if (this.state.hasError) {
+			return <ErrorFallback />;
+		}
+		
+		return this.props.children;
+	}
+}
+```
+
+### Async Error Handling
+```typescript
+// In components
+const handleAsyncAction = async () => {
+	try {
+		setLoading(true);
+		await action();
+	} catch (error) {
+		if (error.name === 'NetworkError') {
+			setError('Network connection failed');
+		} else if (error.status === 401) {
+			// Handle unauthorized
+			navigate('/login');
+		} else {
+			setError('An unexpected error occurred');
+		}
+	} finally {
+		setLoading(false);
+	}
+};
+```
+
+## Testing Considerations
+
+### Component Testing
+- Test component rendering
+- Test user interactions
+- Test error states
+- Test loading states
+- Mock external dependencies
+
+### Store Testing
+- Test state updates
+- Test async actions
+- Test error handling
+- Test subscriptions
+
+### Security Testing
+- Test input validation
+- Test authentication flows
+- Test authorization checks
+- Test XSS prevention
+- Test CSRF protection
+
+## Monitoring & Analytics
+
+### Error Tracking
+- Implement **error boundaries**
+- Log errors to monitoring service
+- Track **performance metrics**
+- Monitor **user interactions**
+
+### Performance Monitoring
+```typescript
+// Track component render times
+const useRenderTime = (componentName: string) => {
+	useEffect(() => {
+		const start = performance.now();
+		
+		return () => {
+			const duration = performance.now() - start;
+			if (duration > 16) { // Longer than one frame
+				console.warn(`${componentName} took ${duration}ms to render`);
+			}
+		};
+	});
+};
+```
+
+## Best Practices
+
+### Code Quality
+- Use **TypeScript** for type safety
+- Implement **proper error handling**
+- Write **comprehensive tests**
+- Follow **security guidelines**
+- Document **complex logic**
+
+### Deployment
+- Use **environment variables**
+- Implement **proper CORS** settings
+- Set up **HTTPS** in production
+- Configure **security headers**
+- Monitor **performance metrics**

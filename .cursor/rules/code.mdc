@@ -1,0 +1,45 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Core Architecture Overview
+
+## Technology Stack
+- **Frontend**: React 19 with TypeScript
+- **Build Tool**: Vite
+- **State Management**: Zustand
+- **Styling**: Tailwind CSS 4 + shadcn/ui components
+- **Additional Libraries**: Add other libraries as necessary (e.g., react-hook-form for forms)
+
+## Core Principles
+
+### 1. Separation of Concerns
+- **Dumb Components**: Only render data and handle UI interactions
+- **Logic Files**: Contain core business logic without rendering
+- **State Management**: Use Zustand for global state, local state for component-specific data
+
+*See [architecture.mdc](mdc:.cursor/rules/architecture.mdc) for detailed patterns*
+
+### 2. Dependency Inversion Principle
+- Define interfaces in `src/api/` (e.g., [GameApi.ts](mdc:src/api/GameApi.ts))
+- Implement concrete classes separately (e.g., [LocalStorageGameApi.ts](mdc:src/api/LocalStorageGameApi.ts))
+- Depend on abstractions, not implementations
+- Future-proof: Add real API implementations without breaking existing code
+
+*See [architecture.mdc](mdc:.cursor/rules/architecture.mdc) for implementation details*
+
+## Quick Reference
+
+### Component Structure
+*See [coding-standards.mdc](mdc:.cursor/rules/coding-standards.mdc) for detailed patterns*
+
+### State Management
+*See [state-management.mdc](mdc:.cursor/rules/state-management.mdc) for Zustand patterns*
+
+### UI Components
+*See [ui-components.mdc](mdc:.cursor/rules/ui-components.mdc) for shadcn/ui patterns*
+
+### Game-Specific Patterns
+*See [game-patterns.mdc](mdc:.cursor/rules/game-patterns.mdc) for multiplayer game mechanics*
+ 

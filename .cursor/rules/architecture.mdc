@@ -1,0 +1,51 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Architecture & Project Structure
+
+## Technology Stack
+- **Frontend**: React 19 with TypeScript
+- **Build Tool**: Vite
+- **State Management**: Zustand
+- **Styling**: Tailwind CSS 4 + shadcn/ui components
+- **Routing**: React Router DOM
+- **Internationalization**: i18next
+- **Linting/Formatting**: Biome
+- **UI Components**: Radix UI primitives with class-variance-authority
+
+## Directory Structure
+```
+src/
+├── api/          # API interfaces and implementations
+├── components/   # React components organized by feature
+│   ├── ui/       # Reusable UI components (shadcn/ui style)
+│   ├── Game/     # Game-specific components
+│   ├── Home/     # Home page components
+│   └── Lobby/    # Lobby components
+├── i18n/         # Internationalization setup
+├── lib/          # Utility functions and helpers
+├── models/       # TypeScript interfaces and types
+├── routes.tsx    # Application routing
+├── state/        # Zustand stores
+└── App.tsx       # Root component
+```
+
+## Component Organization
+- **Feature-based**: Group components by feature (Game, Home, Lobby)
+- **UI components**: Place reusable components in `src/components/ui/`
+- **Page components**: Use `Page` suffix for route-level components
+- **Provider components**: Use `Provider` suffix for context providers
+
+## Separation of Concerns
+- **Dumb components**: Only render data and handle UI interactions
+- **Logic files**: Contain core business logic without rendering
+- **State management**: Use Zustand for global state, local state for component-specific data
+- **API abstraction**: Depend on interfaces, not concrete implementations
+
+## Dependency Inversion Principle
+- Define interfaces in `src/api/` (e.g., [GameApi.ts](mdc:src/api/GameApi.ts))
+- Implement concrete classes separately (e.g., [LocalStorageGameApi.ts](mdc:src/api/LocalStorageGameApi.ts))
+- Depend on abstractions, not implementations
+- Use dependency injection through providers

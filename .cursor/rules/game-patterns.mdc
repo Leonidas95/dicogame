@@ -1,0 +1,106 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Game-Specific Patterns
+
+## Game State Management
+- Use **finite state machines** for game phases
+- Implement **timer management** for phases
+- Handle **player disconnections** gracefully
+- Manage **round progression** and **scoring**
+
+## Game Phases
+```typescript
+type GamePhase = 'lobby' | 'definition' | 'voting' | 'results';
+
+// Phase transitions
+const phaseTransitions = {
+	lobby: ['definition'],
+	definition: ['voting'],
+	voting: ['results'],
+	results: ['definition', 'lobby'], // New round or game end
+};
+```
+
+## Timer Management Pattern
+```typescript
+// In store
+const startPhaseTimer = (duration: number) => {
+	const expiration = Date.now() + duration * 1000;
+	set({ phaseExpiration: expiration });
+	
+	const timer = setTimeout(() => {
+		handleTimerExpiration();
+	}, duration * 1000);
+	
+	return () => clearTimeout(timer);
+};
+
+const handleTimerExpiration = async () => {
+	// Auto-advance phase or handle timeout
+	await advancePhase();
+};
+```
+
+## Multiplayer Patterns
+- **Real-time synchronization**: Use subscriptions for live updates
+- **Player presence**: Track connected/disconnected status
+- **Conflict resolution**: Handle concurrent actions gracefully
+- **Reconnection logic**: Restore game state on reconnect
+- **Graceful degradation**: Handle network issues
+
+## Scoring System
+```typescript
+const calculateScores = (gameState: GameState) => {
+	const roundScores = new Map<string, number>();
+	
+	// Initialize scores for all players
+	gameState.players.forEach((player) => {
+		roundScores.set(player.id, 0);
+	});
+	
+	// Process votes and calculate scores
+	gameState.votes.forEach((vote) => {
+		const votedDefinition = gameState.definitions.find(
+			(def) => def.id === vote.definitionId,
+		);
+		
+		if (votedDefinition) {
+			if (votedDefinition.isCorrect) {
+				// Voter gets 1 point for finding correct definition
+				const currentScore = roundScores.get(vote.playerId) || 0;
+				roundScores.set(vote.playerId, currentScore + 1);
+			} else {
+				// Definition author gets 1 point for each vote received
+				const currentScore = roundScores.get(votedDefinition.playerId) || 0;
+				roundScores.set(votedDefinition.playerId, currentScore + 1);
+			}
+		}
+	});
+	
+	return roundScores;
+};
+```
+
+## Game Flow Management
+- **Round progression**: Track current round vs total rounds
+- **Phase advancement**: Auto-advance when conditions are met
+- **Game completion**: Handle end-of-game scenarios
+- **Player actions**: Validate actions based on current phase
+- **State persistence**: Save game state for reconnection
+
+## Real-time Features
+- **Live updates**: Use subscriptions for immediate feedback
+- **Player activity**: Show who's typing, voting, etc.
+- **Timer synchronization**: Keep all players on same timer
+- **Chat/notifications**: Real-time communication
+- **Visual feedback**: Animations for state changes
+
+## Error Handling for Games
+- **Network disconnection**: Graceful handling with reconnection
+- **Invalid actions**: Prevent actions in wrong phase
+- **Data corruption**: Validate game state integrity
+- **Player timeouts**: Handle inactive players
+- **Game state conflicts**: Resolve concurrent modifications

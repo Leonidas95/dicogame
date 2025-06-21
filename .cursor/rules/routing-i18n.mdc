@@ -1,0 +1,179 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Routing & Internationalization
+
+## Routing Patterns
+
+### Route Structure
+- Use **nested routes** for feature organization
+- Use **URL parameters** for dynamic content
+- Use **programmatic navigation** with useNavigate
+- Handle **404** and **error** routes
+
+### Route Configuration
+```typescript
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+export default function AppRoutes() {
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<HomePage />} />
+				<Route path="/join/:lobbyId" element={<JoinPage />} />
+				<Route path="/lobby/:lobbyId" element={<LobbyPage />} />
+				<Route path="/game/:lobbyId" element={<GamePage />} />
+			</Routes>
+		</BrowserRouter>
+	);
+}
+```
+
+### Route Guards
+- Check authentication/authorization
+- Validate route parameters
+- Redirect invalid routes
+- Handle loading states
+
+### URL Management Pattern
+```typescript
+// In store
+const updateUrl = (lobbyId?: string) => {
+	if (lobbyId) {
+		window.history.pushState({}, '', `/lobby/${lobbyId}`);
+	} else {
+		window.history.pushState({}, '', '/');
+	}
+};
+
+const getLobbyIdFromUrl = () => {
+	const path = window.location.pathname;
+	const lobbyMatch = path.match(/^\/lobby\/([A-Z0-9]{4})$/);
+	const gameMatch = path.match(/^\/game\/([A-Z0-9]{4})$/);
+	return lobbyMatch ? lobbyMatch[1] : gameMatch ? gameMatch[1] : null;
+};
+```
+
+## Internationalization (i18n)
+
+### i18n Setup Pattern
+```typescript
+import { useTranslation } from 'react-i18next';
+
+export default function Component() {
+	const { t } = useTranslation();
+	
+	return (
+		<div>
+			<h1>{t('game.title')}</h1>
+			<p>{t('game.round', { round: currentRound })}</p>
+			<button>{t('common.submit')}</button>
+		</div>
+	);
+}
+```
+
+### Translation Key Organization
+- Use **namespaced** translations for features
+- Support **pluralization** and **interpolation**
+- Group related keys together
+- Use **descriptive** key names
+
+### Translation File Structure
+```json
+{
+	"game": {
+		"title": "DicoGame",
+		"round": "Round {{round}} of {{total}}",
+		"phases": {
+			"definition": "Write your definition",
+			"voting": "Vote for the correct definition",
+			"results": "Round results"
+		}
+	},
+	"common": {
+		"submit": "Submit",
+		"cancel": "Cancel",
+		"loading": "Loading...",
+		"error": "An error occurred"
+	}
+}
+```
+
+### Language Detection
+- Use **browser language detection**
+- Support **manual language switching**
+- **Persist** language preference
+- **Fallback** to default language
+
+### Dynamic Content
+```typescript
+// Interpolation
+t('game.playerJoined', { player: playerName })
+
+// Pluralization
+t('game.playersCount', { count: playerCount })
+
+// Complex interpolation
+t('game.score', { 
+	player: playerName, 
+	score: playerScore,
+	round: currentRound 
+})
+```
+
+## Navigation Patterns
+
+### Programmatic Navigation
+```typescript
+import { useNavigate } from 'react-router-dom';
+
+export default function Component() {
+	const navigate = useNavigate();
+	
+	const handleJoinGame = (lobbyId: string) => {
+		navigate(`/lobby/${lobbyId}`);
+	};
+	
+	const handleStartGame = () => {
+		navigate(`/game/${lobbyId}`);
+	};
+	
+	const handleGoHome = () => {
+		navigate('/');
+	};
+}
+```
+
+### URL Parameter Handling
+```typescript
+import { useParams } from 'react-router-dom';
+
+export default function GamePage() {
+	const { lobbyId } = useParams<{ lobbyId: string }>();
+	
+	useEffect(() => {
+		if (lobbyId) {
+			// Handle lobby ID from URL
+			setLobbyId(lobbyId);
+		}
+	}, [lobbyId]);
+}
+```
+
+### Route Protection
+```typescript
+// Check if user can access route
+const canAccessGame = (lobbyId: string, playerId: string) => {
+	return gameState?.players.some(p => p.id === playerId);
+};
+
+// Redirect if not authorized
+useEffect(() => {
+	if (lobbyId && playerId && !canAccessGame(lobbyId, playerId)) {
+		navigate('/');
+	}
+}, [lobbyId, playerId, navigate]);
+```

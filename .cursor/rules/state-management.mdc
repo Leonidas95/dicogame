@@ -1,0 +1,133 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# State Management with Zustand
+
+## State Management Patterns
+- Use **Zustand** for global state
+- Keep local state in components when possible
+- Use **subscriptions** for real-time updates
+- Implement **error boundaries** and loading states
+- Use **async/await** for API calls
+
+## Store Structure Pattern
+```typescript
+import { create } from 'zustand';
+
+interface StoreState {
+	// State
+	data: DataType | null;
+	loading: boolean;
+	error: string | null;
+	
+	// Subscriptions
+	subscribe: (callback: () => void) => () => void;
+	
+	// Actions
+	setData: (data: DataType) => void;
+	setLoading: (loading: boolean) => void;
+	setError: (error: string | null) => void;
+	
+	// Async actions
+	fetchData: () => Promise<void>;
+	updateData: (data: Partial<DataType>) => Promise<void>;
+}
+
+export const useStore = create<StoreState>((set, get) => {
+	const subscribers = new Set<() => void>();
+	
+	const notifySubscribers = () => {
+		subscribers.forEach((callback) => callback());
+	};
+	
+	return {
+		// State
+		data: null,
+		loading: false,
+		error: null,
+		
+		// Subscriptions
+		subscribe(callback: () => void) {
+			subscribers.add(callback);
+			return () => {
+				subscribers.delete(callback);
+			};
+		},
+		
+		// Actions
+		setData: (data) => set({ data }),
+		setLoading: (loading) => set({ loading }),
+		setError: (error) => set({ error }),
+		
+		// Async actions
+		fetchData: async () => {
+			try {
+				set({ loading: true, error: null });
+				const result = await api.getData();
+				set({ data: result, loading: false });
+				notifySubscribers();
+			} catch (error) {
+				set({ error: error.message, loading: false });
+			}
+		},
+		
+		updateData: async (data) => {
+			try {
+				set({ loading: true, error: null });
+				const result = await api.updateData(data);
+				set({ data: result, loading: false });
+				notifySubscribers();
+			} catch (error) {
+				set({ error: error.message, loading: false });
+			}
+		},
+	};
+});
+```
+
+## Component Usage Pattern
+```typescript
+export default function Component() {
+	const { data, loading, error, fetchData, subscribe } = useStore();
+	
+	// Subscribe to state changes
+	useEffect(() => {
+		return subscribe(() => {
+			// Handle state updates
+		});
+	}, [subscribe]);
+	
+	// Fetch data on mount
+	useEffect(() => {
+		fetchData();
+	}, [fetchData]);
+	
+	if (loading) return <Loading />;
+	if (error) return <ErrorComponent error={error} />;
+	
+	return <div>{/* Render data */}</div>;
+}
+```
+
+## State Organization Principles
+- **Single source of truth**: One store per domain
+- **Immutable updates**: Always create new objects/arrays
+- **Derived state**: Use selectors for computed values
+- **Normalized data**: Use IDs for relationships
+- **Optimistic updates**: Update UI immediately, sync with server
+
+## Performance Optimization
+- Use **selectors** to prevent unnecessary re-renders
+- Implement **debouncing** for frequent updates
+- Use **React.memo** for expensive components
+- **Lazy load** data when possible
+- **Cache** frequently accessed data
+
+## Real-time Updates
+- Use **subscriptions** for live data
+- Implement **reconnection** logic
+- Handle **conflict resolution** for concurrent updates
+- Provide **visual feedback** for state changes
+- **Queue** updates during offline periods

@@ -1,0 +1,131 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Coding Standards & Style Guide
+
+## Code Style & Formatting
+- Use **tabs** for indentation (configured in biome.json)
+- Use **single quotes** for strings (configured in biome.json)
+- Use **semicolons** at the end of statements
+- Use **trailing commas** in objects and arrays
+- Maximum line length: 100 characters
+- Use **PascalCase** for component names and interfaces
+- Use **camelCase** for variables, functions, and properties
+- Use **kebab-case** for file names and CSS classes
+
+## TypeScript Patterns
+
+### Type Definitions
+- Define interfaces in `src/models/`
+- Use **strict typing** for all props and state
+- Use **union types** for finite sets of values
+- Use **optional properties** with `?` when appropriate
+- Use **readonly** for immutable data
+
+### Type Safety Examples
+```typescript
+// Use discriminated unions for state
+type GamePhase = 'lobby' | 'definition' | 'voting' | 'results';
+
+// Use interfaces for object shapes
+interface Player {
+	id: string;
+	nickname: string;
+	score: number;
+	connected: boolean;
+}
+
+// Use generics for reusable types
+interface ApiResponse<T> {
+	data: T;
+	error?: string;
+}
+```
+
+## Component Structure Pattern
+```typescript
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useGameStore } from '../state/gameStore';
+import { Button } from '../ui/button';
+import { Card } from '../ui/card';
+
+interface ComponentProps {
+	// Props interface
+}
+
+export default function ComponentName({ prop1, prop2 }: ComponentProps) {
+	const { t } = useTranslation();
+	const { state, action } = useGameStore();
+	const [localState, setLocalState] = useState();
+
+	// Effects
+	useEffect(() => {
+		// Effect logic
+	}, [dependencies]);
+
+	// Event handlers
+	const handleAction = async () => {
+		try {
+			await action();
+		} catch (error) {
+			// Error handling
+		}
+	};
+
+	// Early returns for loading/error states
+	if (loading) return <Loading />;
+	if (error) return <ErrorComponent error={error} />;
+
+	return (
+		<Card>
+			{/* Component JSX */}
+		</Card>
+	);
+}
+```
+
+## Error Handling Pattern
+```typescript
+// In components
+const handleAction = async () => {
+	try {
+		setLoading(true);
+		await action();
+	} catch (error) {
+		setError(error.message);
+	} finally {
+		setLoading(false);
+	}
+};
+
+// In stores
+const action = async () => {
+	try {
+		set({ loading: true, error: null });
+		const result = await api.action();
+		set({ data: result, loading: false });
+	} catch (error) {
+		set({ error: error.message, loading: false });
+	}
+};
+```
+
+## API Interface Pattern
+```typescript
+export interface GameApi {
+	// Group related methods together
+	// Lobby operations
+	createLobby(...): Promise<...>;
+	joinLobby(...): Promise<...>;
+	
+	// Game operations
+	submitDefinition(...): Promise<...>;
+	voteDefinition(...): Promise<...>;
+	
+	// State management
+	getGameState(...): Promise<...>;
+}
+```

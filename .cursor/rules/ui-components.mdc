@@ -1,0 +1,111 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# UI Components & Styling
+
+## UI Component Patterns
+- Use **class-variance-authority** for component variants
+- Extend Radix UI primitives when possible
+- Use **cn()** utility for conditional classes
+- Follow shadcn/ui patterns for component structure
+- Use **data-slot** attributes for styling hooks
+
+## Component Styling Pattern
+```typescript
+// Use class-variance-authority for variants
+const buttonVariants = cva(
+	"base-classes",
+	{
+		variants: {
+			variant: {
+				default: "default-classes",
+				destructive: "destructive-classes",
+			},
+			size: {
+				sm: "small-classes",
+				lg: "large-classes",
+			},
+		},
+		defaultVariants: {
+			variant: "default",
+			size: "default",
+		},
+	}
+);
+```
+
+## Tailwind CSS Guidelines
+- Use **utility-first** approach
+- Use **dark mode** variants with `dark:` prefix
+- Use **responsive** variants when needed
+- Use **custom CSS variables** for theming
+- Use **shadcn/ui** design tokens
+
+## Component Structure
+```typescript
+import { Slot } from '@radix-ui/react-slot';
+import { cva, type VariantProps } from 'class-variance-authority';
+import type * as React from 'react';
+import { cn } from '@/lib/utils';
+
+const componentVariants = cva(
+	"base-classes",
+	{
+		variants: {
+			variant: {
+				default: "default-classes",
+				// other variants
+			},
+			size: {
+				default: "default-size",
+				// other sizes
+			},
+		},
+		defaultVariants: {
+			variant: "default",
+			size: "default",
+		},
+	}
+);
+
+function Component({
+	className,
+	variant,
+	size,
+	asChild = false,
+	...props
+}: React.ComponentProps<'div'> &
+	VariantProps<typeof componentVariants> & {
+		asChild?: boolean;
+	}) {
+	const Comp = asChild ? Slot : 'div';
+
+	return (
+		<Comp
+			data-slot="component"
+			className={cn(componentVariants({ variant, size, className }))}
+			{...props}
+		/>
+	);
+}
+
+export { Component, componentVariants };
+```
+
+## Loading States
+- Show loading indicators during async operations
+- Use skeleton components for content loading
+- Disable interactive elements during loading
+- Provide feedback for user actions
+
+## Accessibility Guidelines
+- Use semantic HTML elements
+- Add proper **aria-labels** and **aria-describedby**
+- Implement **keyboard navigation**
+- Ensure **color contrast** compliance
+- Add **focus indicators**
+- Use descriptive text for interactive elements
+- Provide **alternative text** for images
+- Use **landmark roles** for page structure

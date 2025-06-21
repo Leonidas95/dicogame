@@ -1,0 +1,94 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# DicoGame - Core Game Mechanics
+
+## Game Overview
+**DicoGame** is a multiplayer word guessing game where players attempt to identify the correct definition of a real word without prior knowledge of its meaning.
+
+## Game Objective
+Players compete to either:
+- Find the correct definition (earn 1 point)
+- Fool other players with their fake definition (earn 1 point per vote received)
+
+## Game Flow
+
+### Round Structure
+Each round follows this sequence:
+
+1. **Word Display Phase**
+   - The target word is displayed on screen
+   - All players can see the word simultaneously
+
+2. **Definition Writing Phase** (2 minutes)
+   - Players write their proposed definition
+   - One player writes the correct definition (system)
+   - Other players write fake definitions
+   - Timer ensures fair play
+
+3. **Definition Review Phase**
+   - All definitions are displayed in a list
+   - Players cannot see who wrote which definition
+   - Players cannot vote for their own definition
+
+4. **Voting Phase**
+   - Players vote for the definition they believe is correct
+   - Each player gets one vote
+   - Self-voting is prohibited
+
+5. **Scoring Phase**
+   - **Correct Definition Voters**: Earn 1 point each
+   - **Fake Definition Authors**: Earn 1 point per vote received
+   - Scores are updated and displayed
+
+### Game Progression
+- **Rounds**: Continue until predetermined number is reached
+- **Game End**: Occurs when all rounds are completed or all players leave
+- **Winner**: Player with the highest score at game end
+
+## Scoring System
+
+### Point Distribution
+```typescript
+// Example scoring logic
+const calculateRoundScores = (votes: Vote[], definitions: Definition[]) => {
+	votes.forEach(vote => {
+		const definition = definitions.find(d => d.id === vote.definitionId);
+		
+		if (definition.isCorrect) {
+			// Voter gets 1 point for finding correct definition
+			addScore(vote.playerId, 1);
+		} else {
+			// Definition author gets 1 point for each vote received
+			addScore(definition.playerId, 1);
+		}
+	});
+};
+```
+
+### Victory Conditions
+- **Primary**: Highest total score after all rounds
+- **Tiebreaker**: Most correct definitions identified
+- **Final Tiebreaker**: Most votes received on fake definitions
+
+## Game Rules
+
+### Player Actions
+- **Definition Writing**: Must be completed within 2-minute time limit
+- **Voting**: One vote per player per round
+- **Self-Voting**: Strictly prohibited
+- **Communication**: No external communication about definitions
+
+### Fair Play
+- **No External Resources**: Players cannot look up word definitions
+- **Original Content**: Definitions must be original, not copied
+- **Time Limits**: Strict enforcement of phase timers
+- **Anonymous Voting**: Player identities hidden during voting
+
+### Game State Management
+- **Phase Transitions**: Automatic progression when conditions are met
+- **Player Disconnection**: Graceful handling with reconnection support
+- **State Persistence**: Game state saved for session recovery
+- **Real-time Updates**: Live synchronization across all players
