@@ -128,22 +128,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
         with:
-          node-version: "22.x"
-          cache: "npm"
-
-      - name: Restore npm cache
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-
-      - name: Build Application
-        run: npm run build
-        env:
-          NODE_ENV: "production"
+          name: build-artifacts
+          path: .
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
