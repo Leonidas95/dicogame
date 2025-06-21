@@ -13,6 +13,9 @@ i18n
 		interpolation: {
 			escapeValue: false,
 		},
+		backend: {
+			loadPath: `${import.meta.env.BASE_URL}locales/{{lng}}/translation.json`,
+		},
 	});
 
 export default i18n;
