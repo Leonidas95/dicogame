@@ -462,7 +462,7 @@ class PeerJSGameApiImpl implements GameApi {
 		return this.connectToHost(lobbyId, nickname);
 	}
 
-	public async leaveLobby(playerId: string, lobbyId: string): Promise<void> {
+	public async leaveLobby(playerId: string): Promise<void> {
 		if (this.isHost) {
 			await this.handleLeaveLobby(playerId);
 		} else {
@@ -487,7 +487,7 @@ class PeerJSGameApiImpl implements GameApi {
 		this.notifyStateChange(); // Notify host's UI of player leave
 	}
 
-	public async startGame(lobbyId: string): Promise<void> {
+	public async startGame(): Promise<void> {
 		if (!this.isHost || !this.lobby)
 			throw new Error('Only host can start game');
 
@@ -526,7 +526,7 @@ class PeerJSGameApiImpl implements GameApi {
 		this.notifyStateChange(); // Notify host's UI of game start
 	}
 
-	public async advancePhase(lobbyId: string): Promise<void> {
+	public async advancePhase(): Promise<void> {
 		if (!this.isHost || !this.lobby)
 			throw new Error('Only host can advance phase');
 
@@ -552,7 +552,7 @@ class PeerJSGameApiImpl implements GameApi {
 					this.lobby.phase = 'definition';
 					this.lobby.phaseExpiration = Date.now() + 120 * 1000;
 
-					const { word, definition } = await this.getNewWord(lobbyId);
+					const { word, definition } = await this.getNewWord();
 					this.lobby.currentWord = word;
 					this.lobby.correctDefinition = definition;
 					this.lobby.definitions = [
@@ -576,7 +576,6 @@ class PeerJSGameApiImpl implements GameApi {
 	public async submitDefinition(
 		playerId: string,
 		definition: string,
-		lobbyId: string,
 	): Promise<void> {
 		if (this.isHost) {
 			await this.handleSubmitDefinition(playerId, definition);
@@ -635,7 +634,6 @@ class PeerJSGameApiImpl implements GameApi {
 	public async voteDefinition(
 		playerId: string,
 		definitionId: string,
-		lobbyId: string,
 	): Promise<void> {
 		if (this.isHost) {
 			await this.handleVoteDefinition(playerId, definitionId);
@@ -726,10 +724,7 @@ class PeerJSGameApiImpl implements GameApi {
 		this.notifyStateChange();
 	}
 
-	public async getGameState(
-		playerId: string,
-		lobbyId: string,
-	): Promise<GameState> {
+	public async getGameState(playerId: string): Promise<GameState> {
 		if (!this.lobby) throw new Error('Lobby not found');
 
 		const players: Player[] = this.lobby.players.map((p) => ({
@@ -771,15 +766,12 @@ class PeerJSGameApiImpl implements GameApi {
 		};
 	}
 
-	public async reconnect(
-		playerId: string,
-		lobbyId: string,
-	): Promise<GameState> {
+	public async reconnect(playerId: string): Promise<GameState> {
 		// For PeerJS, reconnection would involve re-establishing the peer connection
-		return this.getGameState(playerId, lobbyId);
+		return this.getGameState(playerId);
 	}
 
-	public async disconnect(playerId: string, lobbyId: string): Promise<void> {
+	public async disconnect(): Promise<void> {
 		// Close peer connections
 		if (this.isHost) {
 			for (const peer of this.peers.values()) {
@@ -794,14 +786,12 @@ class PeerJSGameApiImpl implements GameApi {
 		this.notifyConnectionChange(false);
 	}
 
-	public async getNewWord(
-		lobbyId: string,
-	): Promise<{ word: string; definition: string }> {
+	public async getNewWord(): Promise<{ word: string; definition: string }> {
 		if (!this.lobby) throw new Error('Lobby not found');
 		return this.wordSource.getWord(this.lobby.language, this.lobby.usedWords);
 	}
 
-	public async updateScores(players: Player[], lobbyId: string): Promise<void> {
+	public async updateScores(players: Player[]): Promise<void> {
 		if (!this.isHost || !this.lobby) return;
 
 		this.lobby.players = players.map((p) => ({
