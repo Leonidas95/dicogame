@@ -16,13 +16,20 @@ export default function JoinPage() {
 	const { lobbyId: urlLobbyId } = useParams<{ lobbyId: string | undefined }>();
 	const [nickname, setNickname] = useState('');
 	const [urlLobbyIsSet] = useState<boolean>(!!urlLobbyId);
-	const { joinLobby, loading, error, lobbyId: currentLobbyId } = useGameStore();
+	const {
+		joinLobby,
+		loading,
+		error,
+		lobbyId: currentLobbyId,
+		setLobbyId: clearLobbyId,
+		setPlayerId,
+	} = useGameStore();
 	const [nicknameInputId, lobbyIdInputId] = useId();
 	const [lobbyId, setLobbyId] = useState('');
 
 	// Navigate to lobby when successfully joined
 	useEffect(() => {
-		if (currentLobbyId) {
+		if (currentLobbyId && currentLobbyId.trim() !== '') {
 			navigate(`/lobby/${currentLobbyId}`);
 		}
 	}, [currentLobbyId, navigate]);
@@ -41,6 +48,10 @@ export default function JoinPage() {
 	};
 
 	const handleBack = () => {
+		// Clear any existing lobby state to prevent infinite loops
+		// Set empty strings to clear the state, which will not trigger navigation
+		clearLobbyId('');
+		setPlayerId('');
 		navigate('/');
 	};
 
