@@ -166,6 +166,44 @@ export const useGameStore = create<GameStore>((set, get) => {
 		// ===== API SETUP =====
 		setApi(api: GameApi) {
 			set({ api });
+
+			// Subscribe to real-time state changes from any API implementation
+			api.subscribeToStateChanges(() => {
+				// Get the updated game state from the API
+				const currentState = get();
+				if (currentState.playerId && currentState.lobbyId) {
+					// Use async function to handle the promise
+					const updateGameState = async () => {
+						try {
+							const gameState = await api.getGameState(
+								currentState.playerId!,
+								currentState.lobbyId!,
+							);
+							console.log('Game store received state update:', gameState);
+
+							// Set phase expiration based on timeLeft from API
+							const phaseExpiration =
+								gameState.timeLeft > 0
+									? Date.now() + gameState.timeLeft * 1000
+									: null;
+
+							set({
+								gameState,
+								phaseExpiration,
+								loading: false,
+								error: null,
+							});
+							notifySubscribers();
+						} catch (error) {
+							console.error('Error getting updated game state:', error);
+							set({
+								error: error instanceof Error ? error.message : 'Unknown error',
+							});
+						}
+					};
+					updateGameState();
+				}
+			});
 		},
 
 		setPlayerId(id: string) {
@@ -381,16 +419,6 @@ export const useGameStore = create<GameStore>((set, get) => {
 				}
 
 				await api.submitDefinition(playerId, definition, lobbyId);
-
-				const gameState = await api.getGameState(playerId, lobbyId);
-				const allPlayersSubmitted = checkAllPlayersSubmitted(gameState);
-
-				if (allPlayersSubmitted && gameState.phase === 'definition') {
-					await api.advancePhase(lobbyId);
-					await get().fetchGameState();
-				} else {
-					await get().fetchGameState();
-				}
 			} catch (e: unknown) {
 				set({ error: e instanceof Error ? e.message : 'Unknown error' });
 			} finally {
@@ -411,18 +439,6 @@ export const useGameStore = create<GameStore>((set, get) => {
 				}
 
 				await api.voteDefinition(playerId, definitionId, lobbyId);
-
-				const gameState = await api.getGameState(playerId, lobbyId);
-				const allPlayersVoted = checkAllPlayersVoted(gameState);
-
-				if (allPlayersVoted && gameState.phase === 'voting') {
-					// Use the fresh gameState that includes all votes
-					const updatedPlayers = calculateScores(gameState);
-					await api.updateScores(updatedPlayers, lobbyId);
-					await api.advancePhase(lobbyId);
-				}
-
-				await get().fetchGameState();
 			} catch (e: unknown) {
 				set({ error: e instanceof Error ? e.message : 'Unknown error' });
 			} finally {

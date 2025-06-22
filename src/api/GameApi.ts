@@ -38,6 +38,9 @@ export interface GameApi {
 
 	// Lobby discovery
 	getLobbies(): Promise<Lobby[]>;
+
+	// Real-time updates
+	subscribeToStateChanges(callback: () => void): () => void;
 }
 
 // GameState will be defined in models/Game.ts

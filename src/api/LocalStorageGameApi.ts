@@ -12,6 +12,7 @@ class LocalStorageGameApiImpl implements GameApi {
 	private lastLobbiesState: string | null = null;
 	private pollInterval: number | null = null;
 	private isUpdating: boolean = false;
+	private stateChangeCallbacks = new Set<() => void>();
 
 	constructor() {
 		this.initializeStorage();
@@ -42,11 +43,15 @@ class LocalStorageGameApiImpl implements GameApi {
 	}
 
 	private notifyStateChange() {
+		// Notify via custom event (for backward compatibility)
 		window.dispatchEvent(
 			new CustomEvent('dicoGameStateChanged', {
 				detail: { timestamp: Date.now() },
 			}),
 		);
+
+		// Notify via callbacks
+		this.stateChangeCallbacks.forEach((callback) => callback());
 	}
 
 	private initializeStorage() {
@@ -338,6 +343,19 @@ class LocalStorageGameApiImpl implements GameApi {
 			isCorrect: false,
 		};
 		lobby.definitions.push(newDefinition);
+
+		// Check if all players have submitted definitions
+		const allPlayersSubmitted =
+			lobby.players.every((player) =>
+				lobby.definitions.some((def) => def.playerId === player.id),
+			) && lobby.definitions.length === lobby.players.length + 1; // +1 for system definition
+
+		if (allPlayersSubmitted) {
+			// Auto-advance to voting phase
+			lobby.phase = 'voting';
+			lobby.phaseExpiration = Date.now() + 120 * 1000; // 2 minutes for voting
+		}
+
 		await this.updateLobby(lobby);
 	}
 
@@ -358,6 +376,53 @@ class LocalStorageGameApiImpl implements GameApi {
 		const definition = lobby.definitions.find((d) => d.id === definitionId);
 		if (definition) {
 			definition.votes.push(playerId);
+		}
+
+		// Check if all players have voted
+		const allPlayersVoted = lobby.players.every((player) =>
+			lobby.votes.some((vote) => vote.playerId === player.id),
+		);
+
+		if (allPlayersVoted) {
+			// Calculate scores
+			const roundScores = new Map<string, number>();
+
+			// Initialize round scores for all players
+			lobby.players.forEach((player) => {
+				roundScores.set(player.id, 0);
+			});
+
+			// Process votes and calculate round scores
+			lobby.votes.forEach((vote) => {
+				const votedDefinition = lobby.definitions.find(
+					(def) => def.id === vote.definitionId,
+				);
+				if (votedDefinition) {
+					if (votedDefinition.isCorrect) {
+						// Player who voted for the correct definition gets 1 point
+						const currentScore = roundScores.get(vote.playerId) || 0;
+						roundScores.set(vote.playerId, currentScore + 1);
+					} else {
+						// Player who fooled others gets 1 point for each vote they received
+						const currentScore = roundScores.get(votedDefinition.playerId) || 0;
+						roundScores.set(votedDefinition.playerId, currentScore + 1);
+					}
+				}
+			});
+
+			// Update player scores by adding round scores to existing scores
+			lobby.players = lobby.players.map((player) => {
+				const roundScore = roundScores.get(player.id) || 0;
+				const newTotalScore = (player.score || 0) + roundScore;
+				return {
+					...player,
+					score: newTotalScore,
+				};
+			});
+
+			// Auto-advance to results phase
+			lobby.phase = 'results';
+			lobby.phaseExpiration = Date.now() + 15 * 1000; // 15 seconds for results
 		}
 
 		await this.updateLobby(lobby);
@@ -424,6 +489,11 @@ class LocalStorageGameApiImpl implements GameApi {
 
 	public async getLobbies(): Promise<Lobby[]> {
 		return await this.getStoredLobbies();
+	}
+
+	public subscribeToStateChanges(callback: () => void): () => void {
+		this.stateChangeCallbacks.add(callback);
+		return () => this.stateChangeCallbacks.delete(callback);
 	}
 }
 
