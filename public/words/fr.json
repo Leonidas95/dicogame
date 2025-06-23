@@ -1,42 +1,542 @@
 [
 	{
-		"word": "serendipité",
+		"word": "SERENDIPITÉ",
 		"definition": "La découverte fortuite de quelque chose d'agréable ou d'utile"
 	},
 	{
-		"word": "éphémère",
-		"definition": "Qui ne dure qu'un temps très court"
-	},
-	{
-		"word": "mélodieux",
-		"definition": "Qui a une sonorité agréable et harmonieuse"
-	},
-	{
-		"word": "chimérique",
+		"word": "CHIMÉRIQUE",
 		"definition": "Qui relève de l'imagination pure, irréalisable"
 	},
 	{
-		"word": "perspicace",
-		"definition": "Qui comprend rapidement et avec justesse"
-	},
-	{
-		"word": "ineffable",
+		"word": "INEFFABLE",
 		"definition": "Qui ne peut être exprimé par des mots"
 	},
 	{
-		"word": "éthéré",
+		"word": "ÉTHÉRÉ",
 		"definition": "Extrêmement délicat et léger, d'apparence surnaturelle"
 	},
 	{
-		"word": "luminescent",
-		"definition": "Qui émet de la lumière sans chaleur"
-	},
-	{
-		"word": "inexorable",
-		"definition": "Qui ne peut être arrêté ou empêché"
-	},
-	{
-		"word": "pernicieux",
+		"word": "PERNICIEUX",
 		"definition": "Qui a un effet nuisible, surtout de manière progressive"
+	},
+	{
+		"word": "NACARAT",
+		"definition": "La couleur entre le rouge et l'orangé."
+	},
+	{
+		"word": "KULDÉEN",
+		"definition": "Nom donné en Écosse vers le IX ème siècle à des ecclésiastiques qui avec les moines composaient le clergé et paraissent avoir appartenu à l'ordre des chanoines."
+	},
+	{
+		"word": "CAVILLATION",
+		"definition": "Argument ou raisonnement subtil et spécieux."
+	},
+	{
+		"word": "NOOCRATIE",
+		"definition": "Domination de la raison pure en tant que faculté directrice de toutes les autres."
+	},
+	{
+		"word": "VALDOTAIN",
+		"definition": "Personne originaire du val d'Aoste, en Italie."
+	},
+	{
+		"word": "CABESTAN",
+		"definition": "Treuil vertical qui se manoeuvre au moyen de barres fixes et horizontales."
+	},
+	{
+		"word": "PANSÉLÉNE",
+		"definition": "Ancien terme d'astronomie qui signifie pleine lune."
+	},
+	{
+		"word": "LACTESCENCE",
+		"definition": "Qualité d'un liquide qui ressemble à du lait."
+	},
+	{
+		"word": "NYCTALOPE",
+		"definition": "Celui ou celle qui ne voit pas pendant le jour, et qui ne reprend la faculté de distinguer les objets que quand le jour tombe et que la nuit arrive."
+	},
+	{
+		"word": "KYPHONISME",
+		"definition": "Supplice qui consistait à enduire de miel le corps du supplicié, et à le laisser exposé au soleil, les pieds et les mains liés, servant de nourriture aux insectes."
+	},
+	{
+		"word": "BACUL",
+		"definition": "Croupière de grande taille que portaient autrefois les animaux tractant des voitures."
+	},
+	{
+		"word": "CABOSSE",
+		"definition": "Nom de la pousse qui renferme les amandes du cacao."
+	},
+	{
+		"word": "PÉQUIN",
+		"definition": "Nom que les militaires sous Napoléon Ier donnaient par dérision aux bourgeois et qui s'est conservé depuis."
+	},
+	{
+		"word": "CAGADE",
+		"definition": "Situation difficile, gênante, situation d'échec. Mot venant de l'occitan \"cagada\"."
+	},
+	{
+		"word": "LAMENTO",
+		"definition": "Nuance musicale indiquant un ton de lamentation."
+	},
+	{
+		"word": "ZINGARI",
+		"definition": "Un des noms de l'ethnie à laquelle appartiennent les Bohémiens."
+	},
+	{
+		"word": "PALAFITTE",
+		"definition": "Construction du Néolithique, établie sur un plancher grossier supporté par des pilotis et reliée à la rive par une passerelle."
+	},
+	{
+		"word": "CAÏQUE",
+		"definition": "Embarcation étroite et pointue à l'avant en usage dans la mer Egée."
+	},
+	{
+		"word": "ZOOTAXIE",
+		"definition": "Classification des animaux."
+	},
+	{
+		"word": "NABLE",
+		"definition": "Trou de tarière percé dans un canot et fermé par un bouchon."
+	},
+	{
+		"word": "PARACHRONISME",
+		"definition": "Erreur de chronologie, qui consiste à placer un événement plus tard qu'on ne le doit."
+	},
+	{
+		"word": "ABACA",
+		"definition": "Bananier des Philippines de la famille des musacées."
+	},
+	{
+		"word": "ABACHI",
+		"definition": "Arbre africain présentant un bois léger de couleur jaune pâle et un tronc droit de taille moyenne."
+	},
+	{
+		"word": "ABACUS",
+		"definition": "Canne, sceptre qui permettait de distinguer le grand maître de l'Ordre des Templiers."
+	},
+	{
+		"word": "ABADIR",
+		"definition": "Pierre, dans la mythologie romaine, qui avait été camouflée dans des langes et qui avait été dévorée par le dieu Saturne, lequel pensait qu'il s'agissait de son fils Jupiter."
+	},
+	{
+		"word": "ABAISSE",
+		"definition": "Morceau de pâte que l'on a étalé pour en garnir un moule."
+	},
+	{
+		"word": "ABALONE",
+		"definition": "Désigne un mollusque comestible faisant partie des Haliotidae, et qui vit accroché à un rocher."
+	},
+	{
+		"word": "ABAMECTINE",
+		"definition": "Substance utilisée principalement en agriculture pour ses propriétés insecticides et acaricides. Elle a la particularité de pénétrer rapidement dans les végétaux et de rester active sur une longue période."
+	},
+	{
+		"word": "ABAQUE",
+		"definition": "Graphique permettant de donner la solution d'un calcul."
+	},
+	{
+		"word": "ABASIE",
+		"definition": "Symptôme décrit en neurologie et en psychologie qui consiste en la perte de la faculté de marcher."
+	},
+	{
+		"word": "ABATE",
+		"definition": "Variété de poire très allongée à la chair blanche et juteuse."
+	},
+	{
+		"word": "ABATELLEMENT",
+		"definition": "Sentence, dans le commerce du Levant, par laquelle le consul de France privait les négociant ne s'acquittant pas de leur dettes de tous commerces possibles. Aucune pratique commerciale n'était autorisée avec eux."
+	},
+	{
+		"word": "ABATOR",
+		"definition": "Qui est entré en possession, qui a hérité d'un bien. Dans les Tenures de Littleton, ce terme désigne une personne qui a récupéré un héritage, qui est devenu le propriétaire du bien."
+	},
+	{
+		"word": "ABATTANT",
+		"definition": "Elément mobile d'un meuble, qui se lève ou s'abaisse."
+	},
+	{
+		"word": "ABATTE",
+		"definition": "Espèce de petit poisson osseux d'eau douce d'Europe."
+	},
+	{
+		"word": "ABATTIS",
+		"definition": "Abats, tête, pattes et autres parties comestible d'une volaille."
+	},
+	{
+		"word": "ABATTUE",
+		"definition": "Partie d'une voûte ou d'une arcade qui repose sur un piédroit ou un mur et qu'il est possible de mettre en place sans cintre."
+	},
+	{
+		"word": "ABAVE",
+		"definition": "Arrière-grand-père ou arrière-grand-mère du côté paternel ou maternel."
+	},
+	{
+		"word": "ABBATIAT",
+		"definition": "Fonction occupée par un abbé au sein d'un monastère."
+	},
+	{
+		"word": "ABBESSE",
+		"definition": "Supérieure d'une abbaye."
+	},
+	{
+		"word": "ABEILLAGE",
+		"definition": "Impôt seigneurial valide à l'époque médiévale, qui procurait au seigneur féodal la jouissance d'une partie du miel et de la cire provenant des ruches que possédaient ses vassaux."
+	},
+	{
+		"word": "ABELISAURUS",
+		"definition": "Dinosaure théropode qui vécut en Amérique du Sud à la période du crétacé tardif."
+	},
+	{
+		"word": "ABER",
+		"definition": "En Bretagne, estuaire, vallée recouverte par la mer."
+	},
+	{
+		"word": "ABÊTISSEMENT",
+		"definition": "Etat d'une personne qui a été abêtie ou qui s'est abêtie."
+	},
+	{
+		"word": "ABGAL",
+		"definition": "Divinité d'une ancienne contrée syrienne dont la capitale était Palmyre."
+	},
+	{
+		"word": "ABIES",
+		"definition": "Dénomination scientifique du sapin."
+	},
+	{
+		"word": "ABIÉTACÉE",
+		"definition": "Arbre à fruits coniques appartenant à la famille des résineux."
+	},
+	{
+		"word": "ABIOGENÈSE",
+		"definition": "Emergence du vivant à partir de matière non vivante comme les minéraux."
+	},
+	{
+		"word": "ABIOSE",
+		"definition": "Mort apparente d'un organisme vivant."
+	},
+	{
+		"word": "ABKHAZE",
+		"definition": "Langue officielle de la République autonome de l'Abkhazie. Pays situé à la frontière de la Géorgie entre les montagnes du Caucase et de la Mer noire."
+	},
+	{
+		"word": "ABLACTATION",
+		"definition": "Fin de la production de lait chez une mère."
+	},
+	{
+		"word": "ABLE",
+		"definition": "Petit poisson d'eau douce de la famille des Cyprinidae."
+	},
+	{
+		"word": "ABLÉGAT",
+		"definition": "Envoyé extraordinaire du pape."
+	},
+	{
+		"word": "ABLÉGATION",
+		"definition": "Fonction exercée par un délégué papal."
+	},
+	{
+		"word": "ABLETTE",
+		"definition": "Petit poisson d'eau douce dont les écailles sont argentées."
+	},
+	{
+		"word": "ABLIER",
+		"definition": "Filet de pêche de forme carrée utilisé dans la pêche des ables, mais également pour attraper certains poissons de petite taille."
+	},
+	{
+		"word": "ABLUTION",
+		"definition": "Terme religieux à l'origine, utilisé pour désigner les bains rituels ou le lavage de certaines parties du corps suivant la tradition."
+	},
+	{
+		"word": "ABLUTOPHOBIE",
+		"definition": "Peur irrationnelle de la noyade. Les malades ressentent une angoisse immense à la vue de l'eau et à l'idée qu'ils pourraient s'y noyer."
+	},
+	{
+		"word": "ABNÉGATION",
+		"definition": "Sacrifice de son intérêt"
+	},
+	{
+		"word": "ABOMASUM",
+		"definition": "Nom donné à l'estomac des ruminants. Il correspond à la dernière partie du système digestif du ruminant. C'est à cet endroit que les aliments se répandent dans les intestins."
+	},
+	{
+		"word": "ABORNEMENT",
+		"definition": "Délimitation d'une propriété en plaçant des bornes."
+	},
+	{
+		"word": "ABOT",
+		"definition": "Un abot est une pièce fixée sur la partie du bas de la jambe d'un cheval pour l'empêcher de marcher librement lorsqu'il est emmené brouter l'herbe dans les prairies."
+	},
+	{
+		"word": "ABOUCHEMENT",
+		"definition": "Dérivation chirurgicale permettant la jonction de deux vaisseaux."
+	},
+	{
+		"word": "ABOULIE",
+		"definition": "Altération pathologique de la volonté, incapacité à décider."
+	},
+	{
+		"word": "ABOUT",
+		"definition": "Extrémité grâce à laquelle une pièce de métal ou de bois peut être assemblée à une autre."
+	},
+	{
+		"word": "ABOUTAGE",
+		"definition": "Jonction de deux cordes en faisant un noeud."
+	},
+	{
+		"word": "ABOUTISSANTS",
+		"definition": "Morceau de terrain. En comparaison aux tenants, les aboutissants sont les terrains accolés aux côtés les plus étroits d'une maison."
+	},
+	{
+		"word": "ABRASIF",
+		"definition": "Matière capable d'arracher par frottement des particules d'un matériau."
+	},
+	{
+		"word": "ABRASIMÈTRE",
+		"definition": "Instrument servant à mesurer la susceptibilité d'une matière solide à l'abrasion."
+	},
+	{
+		"word": "ABRASION",
+		"definition": "Usure par l'action d'un frottement."
+	},
+	{
+		"word": "ABRÉACTION",
+		"definition": "Manifestation libératrice d'émotions ayant pour origine un traumatisme ancien."
+	},
+	{
+		"word": "ABRÉVIATURE",
+		"definition": "Figure désignant un mot ou une idée précise."
+	},
+	{
+		"word": "ABRICTOSAURUS",
+		"definition": "Genre de dinosaure herbivore bipède appartenant à la famille des Heterodontosauridae, ayant vécu sur le continent africain entre 200 et 145 millions d'années avant notre ère, et pesant moins de 50 kg."
+	},
+	{
+		"word": "ABRIVENT",
+		"definition": "Barrière destinée à empêcher le vent de détruire les cultures."
+	},
+	{
+		"word": "ABROSAURUS",
+		"definition": "Dinosaure sauropode appartenant aux Camarasauridés et pouvant atteindre neuf mètres de long."
+	},
+	{
+		"word": "ABSCISSION",
+		"definition": "Séparation naturelle d'un fruit, d'une feuille ou d'une fleur de sa plante, due aux réactions entre l'éthylène et l'auxine."
+	},
+	{
+		"word": "ABSCONS",
+		"definition": "Ce terme littéraire qualifie des propos, un contenu inintelligible, obscur. Quelque chose d'abscons est mystérieux, difficile à interpréter."
+	},
+	{
+		"word": "ABSIDE",
+		"definition": "Extrémité d'une église, formée par un demi-cercle et située derrière le choeur."
+	},
+	{
+		"word": "ABSOLUTIF",
+		"definition": "Fonction grammaticale désignant le sujet d'un verbe intransitif et le COD d'un verbe transitif dans une langue ergative."
+	},
+	{
+		"word": "ABSORPTIOMÉTRIE",
+		"definition": "Technique médicale utilisée pour contrôler la densité osseuse d'un patient par l'intermédiaire de l'absorption d'un rayonnement."
+	},
+	{
+		"word": "ABSTÈME",
+		"definition": "Qui ne consomme pas d'alcool."
+	},
+	{
+		"word": "ABSTERSION",
+		"definition": "Action de nettoyer des contusions ou des ulcères."
+	},
+	{
+		"word": "ABSTRACTEUR",
+		"definition": "Personne qui aime l'abstraction, le fait d'abstraire."
+	},
+	{
+		"word": "ABUSUS",
+		"definition": "Composant du droit de propriété, avec l'usus et le fructus. L'abusus est le droit de disposer librement d'un bien, d'en faire don, de le mettre en vente ou de procéder à sa destruction."
+	},
+	{
+		"word": "ABUTILON",
+		"definition": "Plante à fleurs orangées ou rouges fleurissant d'avril à octobre."
+	},
+	{
+		"word": "ABYSSINIENNE",
+		"definition": "Habitante originaire de l'Abyssinie, ancien nom de l'Éthiopie."
+	},
+	{
+		"word": "ACABIT",
+		"definition": "Décrit le genre, l'espèce d'une chose ou d'une personne capable ou non, en fonction de cet acabit, de faire telle ou telle chose."
+	},
+	{
+		"word": "ACACIA",
+		"definition": "Arbre épineux à fleurs généralement persistantes et blanches."
+	},
+	{
+		"word": "ACADÉMISME",
+		"definition": "Observation stricte et étroite des traditions et conventions."
+	},
+	{
+		"word": "AÇAÏ",
+		"definition": "Fruit d'un palmier d'Amérique du sud. Ses fruits sont des baies de couleur mauve et ont le goût de chocolat."
+	},
+	{
+		"word": "ACALCULIE",
+		"definition": "Personne qui ne parvient pas à se servir des chiffres et des nombres, qui ne peut pas calculer et souffre de blocages en mathématiques."
+	},
+	{
+		"word": "ACALÈPHE",
+		"definition": "Animal faisant partie d'une classe comprenant la plupart des grandes méduses sans voile."
+	},
+	{
+		"word": "ACANTHE",
+		"definition": "Plante épineuse aux feuilles longues et découpées."
+	},
+	{
+		"word": "ACANTHOCÉPHALE",
+		"definition": "Parasite de vertébrés qui utilise une trompe pour s'accrocher à la paroi intestinale d'un être vivant."
+	},
+	{
+		"word": "ACANTHOCYTOSE",
+		"definition": "Anomalie des globules rouges qui présentent une forme hérissée et une rigidité caractéristiques. L'acanthocytose provoque une anémie."
+	},
+	{
+		"word": "ACANTHOPTÉRYGIEN",
+		"definition": "Poisson à nageoires épineuses."
+	},
+	{
+		"word": "PÉTRICHOR",
+		"definition": "Odeur qui accompagne la chute de pluie sur la terre sèche."
+	},
+	{
+		"word": "BALANE",
+		"definition": "Crustacé vivant dans une loge cylindrique calcaire et accroché aux rochers."
+	},
+	{
+		"word": "RANGUILLON",
+		"definition": "Petit crochet qui fait partie d'un hameçon."
+	},
+	{
+		"word": "CAN",
+		"definition": "Terme de charpenterie. La face la moins large d'une pièce de bois."
+	},
+	{
+		"word": "LABRUM",
+		"definition": "Partie de l'articulation, en forme d'anneau bourrelé, qui permet de créer une adhésion entre la surface articulaire et la capsule articulaire."
+	},
+	{
+		"word": "KADOCHE",
+		"definition": "Grade transcendant de la franc-maçonnerie."
+	},
+	{
+		"word": "PALAMENTE",
+		"definition": "Nom des rames sur les anciennes galères."
+	},
+	{
+		"word": "CAMPANILE",
+		"definition": "Petite tour ouverte et légère, souvent isolée, servant de clocher."
+	},
+	{
+		"word": "AÉROLITHE",
+		"definition": "Variété de météorite composée principalement de silicates."
+	},
+	{
+		"word": "CAGNEUX",
+		"definition": "Personne dont les genoux sont tournés vers l'intérieur ou qui a les jambes tordues."
+	},
+	{
+		"word": "KABIN",
+		"definition": "Chez les musulmans, somme d'argent que le mari doit payer à la femme qu'il rejette."
+	},
+	{
+		"word": "LACONICON",
+		"definition": "Étuve sèche du gymnase dans la Grèce antique."
+	},
+	{
+		"word": "WILLIS",
+		"definition": "Jeunes filles condamnées, d'après une légende de Bohême, à sortir, après leur mort, du tombeau et à danser toute la nuit."
+	},
+	{
+		"word": "PARAMÈSE",
+		"definition": "Cinquième corde de la lyre."
+	},
+	{
+		"word": "KHÉDIVE",
+		"definition": "Titre du vice-roi d'Égypte."
+	},
+	{
+		"word": "PAMPRE",
+		"definition": "Tige de vigne couverte de feuilles."
+	},
+	{
+		"word": "CARAFON",
+		"definition": "Carafe de petite taille, équivalant à environ un quart de bouteille, utilisée en restauration pour contenir principalement du vin ou des liqueurs."
+	},
+	{
+		"word": "KESTROSPHENDONE",
+		"definition": "Fronde conçue pour lancer une sorte de fléchette lourde."
+	},
+	{
+		"word": "QUINQUIÈS",
+		"definition": "Signifie cinq fois. Il s'emploie après bis, ter et quater."
+	},
+	{
+		"word": "CANILLON",
+		"definition": "Clé d'un robinet."
+	},
+	{
+		"word": "ROMIPÈTE",
+		"definition": "Pèlerin allant à Rome."
+	},
+	{
+		"word": "MACABO",
+		"definition": "Le macabo est une plante originaire de l'Amazonie et qui pousse dans les zones tropicales. Ses feuilles en forme de flèches possèdent des tubercules comestibles et riches en amidon."
+	},
+	{
+		"word": "QUESTEUR",
+		"definition": "Magistrat qui assistait les consuls."
+	},
+	{
+		"word": "CAPITOUL",
+		"definition": "Nom qu'on donnait aux magistrats municipaux de la ville de Toulouse."
+	},
+	{
+		"word": "OCELLE",
+		"definition": "Tache arrondie dont le centre est d'une autre couleur que la circonférence."
+	},
+	{
+		"word": "PAS-DE-SOURIS",
+		"definition": "Petit escalier en pierres, construit autrefois dans une fortification."
+	},
+	{
+		"word": "KUMMEL",
+		"definition": "Liqueur alcoolique parfumée au cumin."
+	},
+	{
+		"word": "LISSENCÉPHALIE",
+		"definition": "Ensemble de maladies ayant pour caractéristique une anomalie de l'aspect du cortex cérébral."
+	},
+	{
+		"word": "ROUENNERIE",
+		"definition": "Toiles de coton peintes fabriquées à Rouen."
+	},
+	{
+		"word": "PADDA",
+		"definition": "Oiseau de la famille des plocéidés, originaire d'Asie."
+	},
+	{
+		"word": "CARABA",
+		"definition": "Huile de la noix d'acajou."
+	},
+	{
+		"word": "PASSE-VIOLET",
+		"definition": "Couleur que le fer ou l'acier acquiert à un certain degré de feu."
+	},
+	{
+		"word": "PANNETON",
+		"definition": "La partie d'une clé où sont les dents."
+	},
+	{
+		"word": "PACANE",
+		"definition": "Noyau du pacanier, que l'on rencontre le plus souvent sous le nom de noix de pécan"
 	}
 ]

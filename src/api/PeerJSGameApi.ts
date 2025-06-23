@@ -270,8 +270,8 @@ class PeerJSGameApiImpl implements GameApi {
 			this.peer.on('disconnected', () => {
 				console.log('Peer disconnected from server');
 				// Try to reconnect
-				if (!this.peer!.destroyed) {
-					this.peer!.reconnect();
+				if (!this.peer?.destroyed) {
+					this.peer?.reconnect();
 				}
 			});
 		});
@@ -613,7 +613,7 @@ class PeerJSGameApiImpl implements GameApi {
 		// Check if all players have submitted definitions
 		const allPlayersSubmitted =
 			this.lobby.players.every((player) =>
-				this.lobby!.definitions.some((def) => def.playerId === player.id),
+				this.lobby?.definitions.some((def) => def.playerId === player.id),
 			) && this.lobby.definitions.length === this.lobby.players.length + 1; // +1 for system definition
 
 		if (allPlayersSubmitted) {
@@ -669,7 +669,7 @@ class PeerJSGameApiImpl implements GameApi {
 
 		// Check if all players have voted
 		const allPlayersVoted = this.lobby.players.every((player) =>
-			this.lobby!.votes.some((vote) => vote.playerId === player.id),
+			this.lobby?.votes.some((vote) => vote.playerId === player.id),
 		);
 
 		if (allPlayersVoted) {
@@ -687,7 +687,7 @@ class PeerJSGameApiImpl implements GameApi {
 
 			// Process votes and calculate round scores
 			this.lobby.votes.forEach((vote) => {
-				const votedDefinition = this.lobby!.definitions.find(
+				const votedDefinition = this.lobby?.definitions.find(
 					(def) => def.id === vote.definitionId,
 				);
 				if (votedDefinition) {
