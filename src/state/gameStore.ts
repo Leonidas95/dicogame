@@ -217,20 +217,20 @@ export const useGameStore = create<GameStore>((set, get) => {
 		// ===== URL MANAGEMENT =====
 		updateUrl(lobbyId?: string) {
 			if (lobbyId) {
-				window.history.pushState({}, '', `/lobby/${lobbyId}`);
+				window.location.hash = `/lobby/${lobbyId}`;
 			} else {
-				window.history.pushState({}, '', '/');
+				window.location.hash = '/';
 			}
 		},
 
 		updateGameUrl(lobbyId: string) {
-			window.history.pushState({}, '', `/game/${lobbyId}`);
+			window.location.hash = `/game/${lobbyId}`;
 		},
 
 		getLobbyIdFromUrl() {
-			const path = window.location.pathname;
-			const lobbyMatch = path.match(/^\/lobby\/([A-Z0-9]{4})$/);
-			const gameMatch = path.match(/^\/game\/([A-Z0-9]{4})$/);
+			const hash = window.location.hash.replace('#', '');
+			const lobbyMatch = hash.match(/^\/lobby\/([A-Z0-9]{4})$/);
+			const gameMatch = hash.match(/^\/game\/([A-Z0-9]{4})$/);
 			return lobbyMatch ? lobbyMatch[1] : gameMatch ? gameMatch[1] : null;
 		},
 
@@ -373,7 +373,7 @@ export const useGameStore = create<GameStore>((set, get) => {
 				// Clear stored player ID
 				sessionStorage.removeItem(`dico-player-${lobbyId}`);
 				// Navigate to home page
-				window.location.href = '/';
+				window.location.hash = '/';
 			} catch (e: unknown) {
 				set({
 					error: e instanceof Error ? e.message : 'Unknown error',

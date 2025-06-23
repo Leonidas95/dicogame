@@ -76,7 +76,7 @@ export default function LobbyPage() {
 	};
 
 	const copyLobbyLink = () => {
-		const url = `${window.location.origin}/join/${currentLobbyId}`;
+		const url = `${window.location.origin}${import.meta.env.BASE_URL}#/join/${currentLobbyId}`;
 		navigator.clipboard.writeText(url);
 		setShowShareInfo(true);
 		setTimeout(() => setShowShareInfo(false), 2000);

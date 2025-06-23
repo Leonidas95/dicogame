@@ -24,7 +24,9 @@ export class SimpleWordSource implements WordSource {
 			}
 		}
 
-		const loadingPromise = fetch(`/words/${language}.json`)
+		const loadingPromise = fetch(
+			`${import.meta.env.BASE_URL}words/${language}.json`,
+		)
 			.then((response) => {
 				if (!response.ok) {
 					throw new Error(
