@@ -44,7 +44,7 @@ export default function DefinitionPhase({
 						{t('currentWord')}
 					</h2>
 					<div className="bg-gradient-to-r from-green-600 to-emerald-600 p-6 rounded-lg">
-						<p className="text-3xl sm:text-4xl font-bold text-white tracking-wide">
+						<p className="text-3xl sm:text-4xl font-bold text-white tracking-wide select-none">
 							{currentWord}
 						</p>
 					</div>

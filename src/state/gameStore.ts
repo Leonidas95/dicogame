@@ -350,37 +350,41 @@ export const useGameStore = create<GameStore>((set, get) => {
 		},
 
 		async leaveLobby() {
-			set({ loading: true, error: null, isLeaving: true });
-			try {
-				const api = get().api;
-				const playerId = get().playerId;
-				const lobbyId = get().lobbyId;
+			const { api, playerId, lobbyId } = get();
 
+			// Immediately set leaving state and clear IDs to prevent race conditions
+			set({
+				loading: true,
+				error: null,
+				isLeaving: true,
+				playerId: null,
+				lobbyId: null,
+				gameState: null,
+				phaseExpiration: null,
+			});
+
+			try {
 				if (!api || !playerId || !lobbyId) {
-					set({ error: 'API, player ID, or lobby ID not available' });
+					set({
+						error: 'API, player ID, or lobby ID not available',
+						isLeaving: false,
+					});
 					return;
 				}
 
-				await api.leaveLobby(playerId, lobbyId);
-				set({
-					playerId: null,
-					lobbyId: null,
-					gameState: null,
-					phaseExpiration: null,
-					isLeaving: false,
-				});
-				get().updateUrl();
 				// Clear stored player ID
 				sessionStorage.removeItem(`dico-player-${lobbyId}`);
-				// Navigate to home page
-				window.location.hash = '/';
+
+				await api.leaveLobby(playerId, lobbyId);
+
+				// Navigation is now handled by the component
 			} catch (e: unknown) {
 				set({
 					error: e instanceof Error ? e.message : 'Unknown error',
 					isLeaving: false,
 				});
 			} finally {
-				set({ loading: false });
+				set({ loading: false, isLeaving: false });
 			}
 		},
 

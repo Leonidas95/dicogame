@@ -15,6 +15,7 @@ export default function LobbyPage() {
 	const navigate = useNavigate();
 	const { lobbyId: urlLobbyId } = useParams<{ lobbyId: string }>();
 	const [showShareInfo, setShowShareInfo] = useState(false);
+	const [hasLeftLobby, setHasLeftLobby] = useState(false);
 	const {
 		gameState,
 		leaveLobby,
@@ -31,14 +32,19 @@ export default function LobbyPage() {
 
 	// Set lobby ID from URL if not already set
 	useEffect(() => {
-		if (urlLobbyId && urlLobbyId !== currentLobbyId) {
+		if (
+			urlLobbyId &&
+			urlLobbyId !== currentLobbyId &&
+			!isLeaving &&
+			!hasLeftLobby
+		) {
 			setLobbyId(urlLobbyId);
 		}
-	}, [urlLobbyId, currentLobbyId, setLobbyId]);
+	}, [urlLobbyId, currentLobbyId, setLobbyId, isLeaving, hasLeftLobby]);
 
 	// Check if user has a stored player ID for this lobby
 	useEffect(() => {
-		if (urlLobbyId && !playerId && !isLeaving) {
+		if (urlLobbyId && !playerId && !isLeaving && !loading && !hasLeftLobby) {
 			const storedPlayerId = sessionStorage.getItem(
 				`dico-player-${urlLobbyId}`,
 			);
@@ -50,25 +56,37 @@ export default function LobbyPage() {
 			// Has stored player ID, attempt reconnection
 			attemptReconnection();
 		}
-	}, [urlLobbyId, playerId, isLeaving, navigate, attemptReconnection]);
+	}, [
+		urlLobbyId,
+		playerId,
+		isLeaving,
+		loading,
+		hasLeftLobby,
+		navigate,
+		attemptReconnection,
+	]);
 
 	// Subscribe to game state updates
 	useEffect(() => {
+		if (isLeaving || hasLeftLobby) return; // Don't subscribe if we're leaving or have left
+
 		return subscribe(() => {
 			// State updates are already handled by the store
 		});
-	}, [subscribe]);
+	}, [subscribe, isLeaving, hasLeftLobby]);
 
 	// Navigate to game when phase changes
 	useEffect(() => {
-		if (gameState?.phase === 'definition') {
+		if (gameState?.phase === 'definition' && !isLeaving && !hasLeftLobby) {
 			navigate(`/game/${gameState.lobbyId}`);
 		}
-	}, [gameState?.phase, gameState?.lobbyId, navigate]);
+	}, [gameState?.phase, gameState?.lobbyId, navigate, isLeaving, hasLeftLobby]);
 
 	const handleLeave = async () => {
+		setHasLeftLobby(true);
 		await leaveLobby();
-		// Navigation is now handled by the store
+		// Navigate immediately using React Router
+		navigate('/');
 	};
 
 	const handleStart = async () => {
@@ -82,10 +100,14 @@ export default function LobbyPage() {
 		setTimeout(() => setShowShareInfo(false), 2000);
 	};
 
+	const isHost =
+		gameState?.players &&
+		gameState.players.length > 0 &&
+		gameState.players[0].id === playerId;
 	const canStartGame = gameState?.players && gameState.players.length >= 2;
 
 	// Show loading state while reconnecting
-	if (!gameState && !isLeaving) {
+	if (!gameState && !isLeaving && !loading) {
 		return (
 			<Layout>
 				<PageContainer>
@@ -265,10 +287,10 @@ export default function LobbyPage() {
 
 					{/* Action Buttons */}
 					<div className="space-y-3">
-						{canStartGame && (
+						{isHost && (
 							<Button
 								onClick={handleStart}
-								disabled={loading}
+								disabled={loading || !canStartGame}
 								className="w-full h-14 text-lg font-medium bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50"
 							>
 								<Play className="mr-2 h-5 w-5" />

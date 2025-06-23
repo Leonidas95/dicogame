@@ -24,15 +24,16 @@ export default function HomePage() {
 		loading,
 		error,
 		lobbyId: currentLobbyId,
+		isLeaving,
 	} = useGameStore();
 	const [nicknameInputId, roundsInputId] = useId();
 
-	// Navigate to lobby when lobbyId is set in store
+	// Navigate to lobby when lobbyId is set in store (but not when leaving)
 	useEffect(() => {
-		if (currentLobbyId) {
+		if (currentLobbyId && !isLeaving) {
 			navigate(`/lobby/${currentLobbyId}`);
 		}
-	}, [currentLobbyId, navigate]);
+	}, [currentLobbyId, isLeaving, navigate]);
 
 	const handleCreateLobby = async (e?: React.FormEvent) => {
 		e?.preventDefault();

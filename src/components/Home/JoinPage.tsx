@@ -23,16 +23,17 @@ export default function JoinPage() {
 		lobbyId: currentLobbyId,
 		setLobbyId: clearLobbyId,
 		setPlayerId,
+		isLeaving,
 	} = useGameStore();
 	const [nicknameInputId, lobbyIdInputId] = useId();
 	const [lobbyId, setLobbyId] = useState('');
 
-	// Navigate to lobby when successfully joined
+	// Navigate to lobby when successfully joined (but not when leaving)
 	useEffect(() => {
-		if (currentLobbyId && currentLobbyId.trim() !== '') {
+		if (currentLobbyId && currentLobbyId.trim() !== '' && !isLeaving) {
 			navigate(`/lobby/${currentLobbyId}`);
 		}
-	}, [currentLobbyId, navigate]);
+	}, [currentLobbyId, isLeaving, navigate]);
 
 	const handleJoinLobby = async (e?: React.FormEvent) => {
 		e?.preventDefault();
